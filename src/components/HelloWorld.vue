@@ -27,13 +27,18 @@
     </div>
     <div v-for="(item, index) in sortData" :key="index">
       <h4 style="margin: 0 auto">{{ title }}</h4>
-      <p>
-        <span>考点： {{ testPlaceName }}</span>
-        <span>科目： {{ testSubject }}</span>
+      <p style="display: flex; justify-content: space-between">
+        <span style="display: inline-block">考点： {{ testPlaceName }}</span>
+        <span style="display: inline-block">科目： {{ testSubject }}</span>
       </p>
       <div class="container">
         <div class="item" v-for="(person, key) in item" :key="key">
-          <span>{{ person.name }}</span>
+          <img :src="'img/'+ person.number + '.jpg'" alt="">
+          <p>姓名：{{ person.name }}</p>
+          <p>证号：{{ person.id }}</p>
+          <p><span>考场： {{ '01' }}</span> <span>座位: {{ '04' }}</span></p>
+          <p class="formate"><span>进场：</span> <span class="bd-bottom">               </span></p>
+          <p class="formate"><span>离场：</span> <span class="bd-bottom">               </span></p>
         </div>
       </div>
     </div>
@@ -129,10 +134,33 @@
       page-break-after: always;
       align-items: flex-start;
       .item {
+        font-size: 8px;
         width: 34mm;
-        height: 50mm;
-        border: 1px solid black;
+        height: 55mm;
+        border: 1px solid gray;
         margin: 0 -1px -1px 0;
+        p {
+          text-align: left;
+          margin: 2px 0 0 5px;
+          span {
+            display: inline-block;
+          }
+          .bd-bottom {
+            display: block;
+            min-width: 65%;
+            border-bottom: 1px solid black;
+            margin-right: 7px;
+          }
+        }
+        .formate {
+          display: flex;
+          justify-content: space-between;
+        }
+        img {
+          margin-top: 2px;
+          width: 20mm;
+          height: 24mm;
+        }
       }
     }
     .hello {
