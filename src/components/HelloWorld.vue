@@ -6,7 +6,13 @@
     <p></p>
       <el-input v-model="testPlaceName" placeholder="请输入考点名称，示例：”襄阳技师学院“"></el-input>
     <p></p>
-    <el-input v-model="testSubject" placeholder="请输入考试科目，示例：”2019年4月27日09;00~11:00教育综合“"></el-input>
+    <el-input v-model="testSubject" placeholder="请输入考试科目，示例：”医疗卫生类（E）医学技术“"></el-input>
+    <p></p>
+    <el-input v-model="testDate" placeholder="请输入科目考试日期，示例：”2020年8月1日“"></el-input>
+    <p></p>
+    <el-input v-model="testTimeA" placeholder="请输入科目A考试时间，示例：”08：00 - 9：30“"></el-input>
+    <p></p>
+    <el-input v-model="testTimeB" placeholder="请输入科目B考试时间，示例：”09：30 - 11：00“"></el-input>
     <p></p>
     <!-- 按钮 -->
     <el-upload
@@ -19,7 +25,11 @@
       <el-button size="small" type="primary">上传考场名单表</el-button>
     </el-upload>
     <br />
+    <el-button style="margin-bottom: 10px" type="primary" @click="assignedExamination">分配考场</el-button>
+    <br />
+    <el-button style="margin-bottom: 10px" type="primary" @click="exportExcel">导出excel</el-button>
     <!-- 按钮 end -->
+
     <div class="header">
       <br />
       <p v-if="tableDataLength">考试科目为 <span style="color: red">{{ sortData[0][0].subject }}</span></p>
@@ -36,7 +46,7 @@
           <img :src="'img/'+ person.number + '.jpg'" alt="">
           <p>姓名：{{ person.name }}</p>
           <p>证号：{{ person.id }}</p>
-          <p><span>考场： {{ '01' }}</span> <span>座位: {{ '04' }}</span></p>
+          <p><span>考场： {{ person.examinationRoomA || '' }}</span> <span>座位: {{ person.examinationNumberA || '' }}</span></p>
           <p class="formate"><span>进场：</span> <span class="bd-bottom">               </span></p>
           <p class="formate"><span>离场：</span> <span class="bd-bottom">               </span></p>
         </div>
@@ -58,10 +68,14 @@
         tableData: [],
         tableDataLength: '',
         hasClick: false,
-        testPlaceName: '', // 考点名称
-        title: '', // 标题
-        testSubject: '', // 考试科目
+        testPlaceName: '襄阳技师学院', // 考点名称
+        testDate: '2020年8月1日', // 考试日期
+        title: '2020年度襄阳市市直学校公开招聘笔试座次表', // 标题
+        testSubject: '医疗卫生类（E）医学技术', // 考试科目
+        testTimeA: '08：00 - 9：30',
+        testTimeB: '09：30 - 11：00',
         picUrl: 'logo.png',
+        dataToExcel: '', // 待导出为excel的数据
         sortData: [] // 处理后的数据，每30个为一个数组
       }
     },
@@ -113,6 +127,50 @@
       },
       clickGenerate() {
         this.hasClick = true
+      },
+      /**
+       * subject 科目
+       * place 考试地点
+       * date 考试日期
+       * time 考试时间
+       * examinationRoom 考场号
+       * examinationNumber 座位号
+       * highestgreer 最高学历
+       * **/
+      assignedExamination() { // 分配考场
+        for(let i = 0; i < this.sortData.length; i++) {
+          console.log('第' + i + '个考场')
+          for (let j = 0; j < this.sortData[i].length; j++) {
+            console.log(this.sortData[i][j].name)
+            this.$set(this.sortData[i][j], 'placeA', this.testPlaceName)
+            this.$set(this.sortData[i][j], 'placeB', this.testPlaceName)
+            this.$set(this.sortData[i][j], 'subjectA', this.testSubject)
+            this.$set(this.sortData[i][j], 'subjectB', this.testSubject)
+            this.$set(this.sortData[i][j], 'dateA', this.testDate)
+            this.$set(this.sortData[i][j], 'dateB', this.testDate)
+            this.$set(this.sortData[i][j], 'timeA', this.testTimeA)
+            this.$set(this.sortData[i][j], 'timeB', this.testTimeB)
+            this.$set(this.sortData[i][j], 'examinationRoomA', i + 1 < 10 ? '0' + (i + 1) : i + 1)
+            this.$set(this.sortData[i][j], 'examinationNumberA', j + 1 < 10 ? '0' + (j + 1) : j + 1)
+            this.$set(this.sortData[i][j], 'examinationRoomB', i + 1 < 10 ? '0' + (i + 1) : i + 1)
+            this.$set(this.sortData[i][j], 'examinationNumberB', j + 1 < 10 ? '0' + (j + 1) : j + 1)
+            // this.sortData[i][j].placeA = this.testPlaceName
+            // this.sortData[i][j].placeB = this.testPlaceName
+            // this.sortData[i][j].subjectA = this.testSubject
+            // this.sortData[i][j].subjectB = this.testSubject
+            // this.sortData[i][j].dateA = this.testDate
+            // this.sortData[i][j].dateB = this.testDate
+            // this.sortData[i][j].timeA = this.testTimeA
+            // this.sortData[i][j].timeB = this.testTimeB
+            // this.sortData[i][j].examinationRoomA = i < 10 ? '0' + i : i
+            // this.sortData[i][j].examinationNumberA = i < 10 ? '0' + i : i
+            // this.sortData[i][j].examinationRoomB = j < 10 ? '0' + j : j
+            // this.sortData[i][j].examinationNumberB = j < 10 ? '0' + j : j
+          }
+        }
+      },
+      exportExcel() {
+        console.log(222)
       }
     }
   }
