@@ -46,7 +46,7 @@
           <img :src="'img/'+ person.number + '.jpg'" alt="">
           <p>姓名：{{ person.name }}</p>
           <p>证号：{{ person.id }}</p>
-          <p><span>考场： {{ person.examinationRoomA || '' }}</span> <span>座位: {{ person.examinationNumberA || '' }}</span></p>
+          <p><span style="margin-right: 5px">考场： {{ person.examinationRoomA || '' }}</span> <span>座位: {{ person.examinationNumberA || '' }}</span></p>
           <p class="formate"><span>进场：</span> <span class="bd-bottom">               </span></p>
           <p class="formate"><span>离场：</span> <span class="bd-bottom">               </span></p>
         </div>
@@ -75,7 +75,7 @@
         testTimeA: '08：00 - 9：30',
         testTimeB: '09：30 - 11：00',
         picUrl: 'logo.png',
-        dataToExcel: '', // 待导出为excel的数据
+        dataToExcel: [], // 待导出为excel的数据
         sortData: [] // 处理后的数据，每30个为一个数组
       }
     },
@@ -141,7 +141,7 @@
         for(let i = 0; i < this.sortData.length; i++) {
           console.log('第' + i + '个考场')
           for (let j = 0; j < this.sortData[i].length; j++) {
-            console.log(this.sortData[i][j].name)
+            console.log(this.sortData[i][j].name, i + 1, j + 1)
             this.$set(this.sortData[i][j], 'placeA', this.testPlaceName)
             this.$set(this.sortData[i][j], 'placeB', this.testPlaceName)
             this.$set(this.sortData[i][j], 'subjectA', this.testSubject)
@@ -150,10 +150,10 @@
             this.$set(this.sortData[i][j], 'dateB', this.testDate)
             this.$set(this.sortData[i][j], 'timeA', this.testTimeA)
             this.$set(this.sortData[i][j], 'timeB', this.testTimeB)
-            this.$set(this.sortData[i][j], 'examinationRoomA', i + 1 < 10 ? '0' + (i + 1) : i + 1)
-            this.$set(this.sortData[i][j], 'examinationNumberA', j + 1 < 10 ? '0' + (j + 1) : j + 1)
-            this.$set(this.sortData[i][j], 'examinationRoomB', i + 1 < 10 ? '0' + (i + 1) : i + 1)
-            this.$set(this.sortData[i][j], 'examinationNumberB', j + 1 < 10 ? '0' + (j + 1) : j + 1)
+            this.$set(this.sortData[i][j], 'examinationRoomA', i + 1 < 10 ? '0' + (i + 1) : (i + 1).toString())
+            this.$set(this.sortData[i][j], 'examinationNumberA', j + 1 < 10 ? '0' + (j + 1) : (j + 1).toString())
+            this.$set(this.sortData[i][j], 'examinationRoomB', i + 1 < 10 ? '0' + (i + 1) : (i + 1).toString())
+            this.$set(this.sortData[i][j], 'examinationNumberB', j + 1 < 10 ? '0' + (j + 1) : (j + 1).toString())
             // this.sortData[i][j].placeA = this.testPlaceName
             // this.sortData[i][j].placeB = this.testPlaceName
             // this.sortData[i][j].subjectA = this.testSubject
@@ -169,7 +169,14 @@
           }
         }
       },
+      transformData() { // 将分配考场数据重新转化为可导出excel的全部数据
+        for(let i = 0; i < this.sortData.length; i++) {
+          this.dataToExcel = this.dataToExcel.concat(this.sortData[i])
+        }
+        console.log(this.dataToExcel)
+      },
       exportExcel() {
+        this.transformData()
         console.log(222)
       }
     }
