@@ -6,13 +6,19 @@
     <p></p>
       <el-input v-model="testPlaceName" placeholder="请输入考点名称，示例：”襄阳技师学院“"></el-input>
     <p></p>
-    <el-input v-model="testSubject" placeholder="请输入考试科目，示例：”医疗卫生类（E）医学技术“"></el-input>
+    <el-input v-model="testSubjectA" placeholder="请输入考试科目A，示例：”职业能力倾向测验“"></el-input>
+    <p></p>
+    <el-input v-model="testSubjectB" placeholder="请输入考试科目B，示例：”综合应用能力“"></el-input>
     <p></p>
     <el-input v-model="testDate" placeholder="请输入科目考试日期，示例：”2020年8月1日“"></el-input>
     <p></p>
-    <el-input v-model="testTimeA" placeholder="请输入科目A考试时间，示例：”08：00 - 9：30“"></el-input>
+    <el-input v-model="testTimeA" placeholder="请输入科目A考试时间，示例：”8:00 - 9:30“"></el-input>
     <p></p>
-    <el-input v-model="testTimeB" placeholder="请输入科目B考试时间，示例：”09：30 - 11：00“"></el-input>
+    <el-input v-model="testTimeB" placeholder="请输入科目B考试时间，示例：”9：30 - 11：00“"></el-input>
+    <p></p>
+    <el-input v-model="roomNo" placeholder="请输入考场起始序号，只能为数字"></el-input>
+    <p></p>
+    <el-input v-model="testNumber" placeholder="请输入考生起始准考证号"></el-input>
     <p></p>
     <!-- 按钮 -->
     <el-upload
@@ -39,7 +45,7 @@
       <h4 style="margin: 0 auto">{{ title }}</h4>
       <p style="display: flex; justify-content: space-between">
         <span style="display: inline-block">考点： {{ testPlaceName }}</span>
-        <span style="display: inline-block">科目： {{ testSubject }}</span>
+        <span style="display: inline-block">科目： {{ testSubjectA }} / {{ testSubjectB }} </span>
       </p>
       <div class="container">
         <div class="item" v-for="(person, key) in item" :key="key">
@@ -71,10 +77,13 @@
         testPlaceName: '襄阳技师学院', // 考点名称
         testDate: '2020年8月1日', // 考试日期
         title: '2020年度襄阳市市直学校公开招聘笔试座次表', // 标题
-        testSubject: '医疗卫生类（E）医学技术', // 考试科目
-        testTimeA: '08：00 - 9：30',
-        testTimeB: '09：30 - 11：00',
+        testSubjectA: '职业能力倾向测验', // 考试科目
+        testSubjectB: '综合应用能力', // 考试科目
+        testTimeA: '8:00 - 9:30',
+        testTimeB: '9:30 - 11:00',
         picUrl: 'logo.png',
+        roomNo: null, // 考场起始序号， 用来处理几个分类考试在同一时间同一个考点进行考试的情况
+        testNumber: null, // 考生准考证起始序号
         dataToExcel: [], // 待导出为excel的数据
         sortData: [] // 处理后的数据，每30个为一个数组
       }
@@ -125,9 +134,6 @@
         }
         return arr
       },
-      clickGenerate() {
-        this.hasClick = true
-      },
       /**
        * subject 科目
        * place 考试地点
@@ -139,45 +145,91 @@
        * **/
       assignedExamination() { // 分配考场
         for(let i = 0; i < this.sortData.length; i++) {
+          if (this.roomNo) { // 如果有上一场考场号，那么继续增加
+            this.roomNo = this.roomNo + 1
+          } else { // 否则从1开始
+            this.roomNo = 1
+          }
           console.log('第' + i + '个考场')
           for (let j = 0; j < this.sortData[i].length; j++) {
             console.log(this.sortData[i][j].name, i + 1, j + 1)
             this.$set(this.sortData[i][j], 'placeA', this.testPlaceName)
             this.$set(this.sortData[i][j], 'placeB', this.testPlaceName)
-            this.$set(this.sortData[i][j], 'subjectA', this.testSubject)
-            this.$set(this.sortData[i][j], 'subjectB', this.testSubject)
+            this.$set(this.sortData[i][j], 'subjectA', this.testSubjectA)
+            this.$set(this.sortData[i][j], 'subjectB', this.testSubjectB)
             this.$set(this.sortData[i][j], 'dateA', this.testDate)
             this.$set(this.sortData[i][j], 'dateB', this.testDate)
             this.$set(this.sortData[i][j], 'timeA', this.testTimeA)
             this.$set(this.sortData[i][j], 'timeB', this.testTimeB)
-            this.$set(this.sortData[i][j], 'examinationRoomA', i + 1 < 10 ? '0' + (i + 1) : (i + 1).toString())
+
+            if (this.roomNo < 10) {
+              this.$set(this.sortData[i][j], 'examinationRoomA', '0' + this.roomNo.toString())
+              this.$set(this.sortData[i][j], 'examinationRoomB', '0' + this.roomNo.toString())
+            } else {
+              this.$set(this.sortData[i][j], 'examinationRoomA', this.roomNo.toString())
+              this.$set(this.sortData[i][j], 'examinationRoomB', this.roomNo.toString())
+            }
+
             this.$set(this.sortData[i][j], 'examinationNumberA', j + 1 < 10 ? '0' + (j + 1) : (j + 1).toString())
-            this.$set(this.sortData[i][j], 'examinationRoomB', i + 1 < 10 ? '0' + (i + 1) : (i + 1).toString())
             this.$set(this.sortData[i][j], 'examinationNumberB', j + 1 < 10 ? '0' + (j + 1) : (j + 1).toString())
-            // this.sortData[i][j].placeA = this.testPlaceName
-            // this.sortData[i][j].placeB = this.testPlaceName
-            // this.sortData[i][j].subjectA = this.testSubject
-            // this.sortData[i][j].subjectB = this.testSubject
-            // this.sortData[i][j].dateA = this.testDate
-            // this.sortData[i][j].dateB = this.testDate
-            // this.sortData[i][j].timeA = this.testTimeA
-            // this.sortData[i][j].timeB = this.testTimeB
-            // this.sortData[i][j].examinationRoomA = i < 10 ? '0' + i : i
-            // this.sortData[i][j].examinationNumberA = i < 10 ? '0' + i : i
-            // this.sortData[i][j].examinationRoomB = j < 10 ? '0' + j : j
-            // this.sortData[i][j].examinationNumberB = j < 10 ? '0' + j : j
+            this.$set(this.sortData[i][j], 'testNumber', this.createTestNumber(this.sortData[i][j].subject, this.sortData[i][j].examinationRoomA, this.sortData[i][j].examinationNumberA))
           }
         }
       },
       transformData() { // 将分配考场数据重新转化为可导出excel的全部数据
+        this.dataToExcel = []
         for(let i = 0; i < this.sortData.length; i++) {
           this.dataToExcel = this.dataToExcel.concat(this.sortData[i])
         }
         console.log(this.dataToExcel)
       },
+      formatJson(filterVal, jsonData) {
+        return jsonData.map(v => filterVal.map(j => v[j]))
+      },
+      createTestNumber(subject, roomNo, examinationNumberA) {
+        console.log(roomNo, examinationNumberA)
+        switch (subject) {
+          case '综合管理类（A）':
+            return '202001' + roomNo + examinationNumberA
+          case '社会科学专技类（B）':
+            return '202002' + roomNo + examinationNumberA
+          case '自然科学专技类（C）':
+            return '202003' + roomNo + examinationNumberA
+          case '中小学教师类（D）小学教师':
+            return '202004' + roomNo + examinationNumberA
+          case '中小学教师类（D）中学教师':
+            return '202005' + roomNo + examinationNumberA
+          case '医疗卫生类（E）中医临床':
+            return '202006' + roomNo + examinationNumberA
+          case '医疗卫生类（E）西医临床':
+            return '202007' + roomNo + examinationNumberA
+          case '医疗卫生类（E）药剂':
+            return '202008' + roomNo + examinationNumberA
+          case '医疗卫生类（E）护理':
+            return '202009' + roomNo + examinationNumberA
+          case '医疗卫生类（E）医学技术':
+            return '202010' + roomNo + examinationNumberA
+          case '医疗卫生类（E）公共卫生管理':
+            return '202011' + roomNo + examinationNumberA
+        }
+      },
       exportExcel() {
         this.transformData()
-        console.log(222)
+        const { export_json_to_excel } = require('@/vendor/Export2Excel')
+        // 少一个准考证号，一个报考专业代码
+        const tHeader = ['报考单位', '考试科目', '报考岗位', '报考专业'
+          , '报名序号', '姓名', '身份证号', '考试科目A'
+          , '考试地点A', '考试日期A', '考试时间A', '考场号A', '座位号A'
+          , '考试科目B', '考试地点B', '考试日期B', '考试时间B', '考场号B', '座位号B',
+          '最高学历', '准考证号', '报考专业代码']
+        const filterVal = ['unit', 'subject', 'job', 'subject',
+          'number', 'name',  'id',
+          'subjectA', 'placeA', 'dateA', 'timeA',
+          'examinationRoomA', 'examinationNumberA','subjectB', 'placeB', 'dateB', 'timeB',
+          'examinationRoomB', 'examinationNumberB', 'testNumber', 'testNumber']
+        const list = this.dataToExcel
+        const data = this.formatJson(filterVal, list)
+        export_json_to_excel(tHeader, data, this.dataToExcel[0].subject)
       }
     }
   }
