@@ -2,7 +2,7 @@
   <div class="main-container">
     <img alt="Vue logo" :src="picUrl">
     <h3>考场座次表生成系统</h3>
-    <el-input v-model="title" placeholder="请输入标题，示例：”2019年度襄阳市市直学校公开招聘笔试座次表“"></el-input>
+    <el-input v-model="title" placeholder="请输入标题，示例：”2020年度襄阳市市直学校公开招聘笔试座次表“"></el-input>
     <p></p>
       <el-input v-model="testPlaceName" placeholder="请输入考点名称，示例：”襄阳技师学院“"></el-input>
     <p></p>
@@ -135,7 +135,7 @@
       align-items: flex-start;
       .item {
         font-size: 8px;
-        width: 34mm;
+        width: 34.4mm;
         height: 55mm;
         border: 1px solid gray;
         margin: 0 -1px -1px 0;
