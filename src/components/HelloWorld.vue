@@ -4,7 +4,7 @@
     <h3>考场座次表生成系统</h3>
     <el-input v-model="title" placeholder="请输入标题，示例：”2020年度襄阳市市直学校公开招聘笔试座次表“"></el-input>
     <p></p>
-      <el-input v-model="testPlaceName" placeholder="请输入考点名称，示例：”襄阳技师学院“"></el-input>
+      <el-input v-model="testPlaceName" placeholder="请输入考点名称，示例：”襄阳技师学院（东津）“"></el-input>
     <p></p>
     <el-input v-model="testSubjectA" placeholder="请输入考试科目A，示例：”职业能力倾向测验“"></el-input>
     <p></p>
@@ -77,7 +77,7 @@
         tableData: [],
         tableDataLength: '',
         hasClick: false,
-        testPlaceName: '襄阳技师学院', // 考点名称
+        testPlaceName: '襄阳技师学院（东津）', // 考点名称
         testDate: '2020年8月1日', // 考试日期
         title: '2020年度襄阳市市直学校公开招聘笔试座次表', // 标题
         testSubjectA: '职业能力倾向测验', // 考试科目
@@ -197,10 +197,6 @@
         this.dataToRoomSetExcel = this.dataToRoomSetExcel.concat(this.sortData) // 重置前每次点击分配考场，都把数据塞到这个待导出全部的数组中
       },
       transformData() { // 将分配考场数据重新转化为可导出excel的全部数据
-        // this.dataToExcel = []
-        // for(let i = 0; i < this.sortData.length; i++) {
-        //   this.dataToExcel = this.dataToExcel.concat(this.sortData[i])
-        // }
         console.log(this.dataToExcel)
       },
       formatJson(filterVal, jsonData) {
