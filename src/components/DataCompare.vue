@@ -1,0 +1,141 @@
+<template>
+    <div>
+        <p>使用说明：数据对比用来对比原数据表和对比数据表的指定列，比如需要对比A表和B表的ID和name，那么就指定对比的key为ID，value为name</p>
+        <el-input v-model="dataKey" placeholder="请输入需要对比的key（唯一指定）"></el-input>
+        <p></p>
+        <el-input v-model="dataValue" placeholder="请输入需要对比的对应key的Value"></el-input>
+        <p></p>
+        <div style="flex: 1">
+            <!-- 按钮 -->
+            <el-upload
+                    class="upload"
+                    action=""
+                    :multiple="false"
+                    :show-file-list="false"
+                    accept="csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    :http-request="httpRequest">
+                <el-button size="small" type="primary">上传原数据</el-button>
+            </el-upload>
+            <!-- 按钮 end -->
+            <!-- 按钮 -->
+            <el-upload
+                    class="upload"
+                    action=""
+                    :multiple="false"
+                    :show-file-list="false"
+                    accept="csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    :http-request="httpRequestSecond">
+                <el-button size="small" type="primary">上传需要对比数据</el-button>
+            </el-upload>
+            <!-- 按钮 end -->
+        </div>
+        <el-button style="margin-top: 10px" type="primary" @click="compareData">开始对比</el-button>
+
+    </div>
+</template>
+
+<script>
+    import XLSX from 'xlsx'
+    export default {
+        name: "DataCompare",
+        data() {
+            return {
+                dataKey: '',
+                dataValue: '',
+                sourceData: [],
+                tableData: [],
+                result: []
+            }
+        },
+        methods: {
+            httpRequest(e) {
+                let file = e.file // 文件信息
+                console.log('e: ', e)
+                console.log('file: ', e.file)
+
+                if (!file) {
+                    // 没有文件
+                    return false
+                } else if (!/\.(xls|xlsx)$/.test(file.name.toLowerCase())) {
+                    // 格式根据自己需求定义
+                    this.$message.error('上传格式不正确，请上传xls或者xlsx格式')
+                    return false
+                }
+
+                const fileReader = new FileReader()
+                fileReader.onload = (ev) => {
+                    try {
+                        const data = ev.target.result
+                        const workbook = XLSX.read(data, {
+                            type: 'binary' // 以字符编码的方式解析
+                        })
+                        const exlname = workbook.SheetNames[0] // 取第一张表
+                        const exl = XLSX.utils.sheet_to_json(workbook.Sheets[exlname]) // 生成json表格内容
+                        console.log(exl, exl.length)
+                        this.tableDataLength = exl.length
+                        // 将 JSON 数据挂到 data 里
+                        this.tableData = exl
+                        alert('上传成功')
+                        // document.getElementsByName('file')[0].value = '' // 根据自己需求，可重置上传value为空，允许重复上传同一文件
+                    } catch (e) {
+                        console.log('出错了：：')
+                        return false
+                    }
+
+                }
+                fileReader.readAsBinaryString(file)
+            },
+            httpRequestSecond(e) {
+                let file = e.file // 文件信息
+                console.log('e: ', e)
+                console.log('file: ', e.file)
+
+                if (!file) {
+                    // 没有文件
+                    return false
+                } else if (!/\.(xls|xlsx)$/.test(file.name.toLowerCase())) {
+                    // 格式根据自己需求定义
+                    this.$message.error('上传格式不正确，请上传xls或者xlsx格式')
+                    return false
+                }
+
+                const fileReader = new FileReader()
+                fileReader.onload = (ev) => {
+                    try {
+                        const data = ev.target.result
+                        const workbook = XLSX.read(data, {
+                            type: 'binary' // 以字符编码的方式解析
+                        })
+                        const exlname = workbook.SheetNames[0] // 取第一张表
+                        const exl = XLSX.utils.sheet_to_json(workbook.Sheets[exlname]) // 生成json表格内容
+                        this.tableDataLength = exl.length
+                        // 将 JSON 数据挂到 data 里
+                        this.sourceData = exl
+                        alert('上传成功')
+                        // document.getElementsByName('file')[0].value = '' // 根据自己需求，可重置上传value为空，允许重复上传同一文件
+                    } catch (e) {
+                        console.log('出错了：：')
+                        return false
+                    }
+
+                }
+                fileReader.readAsBinaryString(file)
+            },
+            compareData() {
+                for (let i = 0; i < this.tableData.length; i++) {
+                    for (let j = 0; j < this.sourceData.length; j++) {
+                        if (this.tableData[i].name === this.sourceData[j].name && this.tableData[i].id === this.sourceData[j].id) {
+                            this.result.push('第'+ j + '条数据' + this.tableData[i].name + '已找到')
+                        }
+                    }
+                }
+            }
+        }
+    }
+</script>
+
+<style scoped lang="scss">
+.upload {
+    margin-top: 10px;
+}
+</style>

@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
+import VueRouter from 'vue-router'
+import router from './router'
+
 import './plugins/element.js'
 import {
   Pagination,
@@ -157,6 +160,8 @@ Vue.use(CascaderPanel);
 
 Vue.use(Loading.directive);
 
+Vue.use(VueRouter)
+
 Vue.prototype.$loading = Loading.service;
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
@@ -169,4 +174,5 @@ Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
+  router,
 }).$mount('#app')

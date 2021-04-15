@@ -33,7 +33,7 @@
     </el-upload>
     <div class="button-group">
       <el-button style="margin-bottom: 10px" type="primary" @click="assignedExamination">分配考场</el-button>
-      <el-button style="margin-bottom: 10px" type="primary" @click="exportExcel">导出准考证excel</el-button>
+      <el-button style="margin-bottom: 10px" type="primary" @click="exportEducationExcel">导出准考证excel</el-button>
       <el-button style="margin-bottom: 10px" type="primary" @click="exportRoomExcel">导出考场安排excel</el-button>
       <el-button style="margin-bottom: 10px" type="primary" @click="resetData">重置所有数据</el-button>
     </div>
@@ -48,13 +48,14 @@
       <h4 style="margin: 0 auto">{{ title }}</h4>
       <p style="display: flex; justify-content: space-between">
         <span style="display: inline-block">考点： {{ testPlaceName }}</span>
-        <span style="display: inline-block">科目： {{ testSubjectA }} / {{ testSubjectB }} </span>
+        <span v-if="testSubjectB !== ''" style="display: inline-block">科目： {{ testSubjectA }} / {{ testSubjectB }} </span>
+        <span v-else style="display: inline-block">科目： {{ testSubjectA }} </span>
       </p>
       <div class="container">
         <div class="item" v-for="(person, key) in item" :key="key">
           <img :src="'img/'+ person.number + '.jpg'" alt="">
           <p>姓名：{{ person.name }}</p>
-          <p>证号：{{ person.id }}</p>
+          <p>证号：{{ person.testNumber }}</p>
           <p><span style="margin-right: 5px">考场： {{ person.examinationRoomA || '' }}</span> <span>座位: {{ person.examinationNumberA || '' }}</span></p>
           <p class="formate"><span>进场：</span> <span class="bd-bottom">               </span></p>
           <p class="formate"><span>离场：</span> <span class="bd-bottom">               </span></p>
@@ -78,7 +79,7 @@
         tableDataLength: '',
         hasClick: false,
         testPlaceName: '襄阳技师学院（东津）', // 考点名称
-        testDate: '2020年8月1日', // 考试日期
+        testDate: '2020年8月9日', // 考试日期
         title: '2020年度襄阳市市直学校公开招聘笔试座次表', // 标题
         testSubjectA: '职业能力倾向测验', // 考试科目
         testSubjectB: '综合应用能力', // 考试科目
@@ -160,37 +161,40 @@
           for (let j = 0; j < this.sortData[i].length; j++) {
             console.log(this.sortData[i][j].name, i + 1, j + 1)
             this.$set(this.sortData[i][j], 'subjectA', this.testSubjectA)
-            this.$set(this.sortData[i][j], 'subjectB', this.testSubjectB)
+            // this.$set(this.sortData[i][j], 'subjectB', this.testSubjectB)
             this.$set(this.sortData[i][j], 'dateA', this.testDate)
-            this.$set(this.sortData[i][j], 'dateB', this.testDate)
+            // this.$set(this.sortData[i][j], 'dateB', this.testDate)
             this.$set(this.sortData[i][j], 'timeA', this.testTimeA)
-            this.$set(this.sortData[i][j], 'timeB', this.testTimeB)
+            // this.$set(this.sortData[i][j], 'timeB', this.testTimeB)
             let currentRoom = this.roomNo - 70 // 计算第二考场的序号，为currentRoom
             if (this.roomNo <= 70) {
               this.$set(this.sortData[i][j], 'examinationRoomName', '技师学院1号楼')
               this.$set(this.sortData[i][j], 'placeA', this.testPlaceName + '1号楼')
               if (this.roomNo < 10) {
                 this.$set(this.sortData[i][j], 'examinationRoomA', '0' + this.roomNo.toString())
-                this.$set(this.sortData[i][j], 'examinationRoomB', '0' + this.roomNo.toString())
+                // this.$set(this.sortData[i][j], 'examinationRoomB', '0' + this.roomNo.toString())
               } else {
                 this.$set(this.sortData[i][j], 'examinationRoomA', this.roomNo.toString())
-                this.$set(this.sortData[i][j], 'examinationRoomB', this.roomNo.toString())
+                // this.$set(this.sortData[i][j], 'examinationRoomB', this.roomNo.toString())
               }
             } else {
               this.$set(this.sortData[i][j], 'examinationRoomName', '技师学院2号楼')
               this.$set(this.sortData[i][j], 'placeA', this.testPlaceName + '2号楼')
               if (currentRoom < 10) {
                 this.$set(this.sortData[i][j], 'examinationRoomA', '0' + currentRoom.toString())
-                this.$set(this.sortData[i][j], 'examinationRoomB', '0' + currentRoom.toString())
+                // this.$set(this.sortData[i][j], 'examinationRoomB', '0' + currentRoom.toString())
               } else {
                 this.$set(this.sortData[i][j], 'examinationRoomA', currentRoom.toString())
-                this.$set(this.sortData[i][j], 'examinationRoomB', currentRoom.toString())
+                // this.$set(this.sortData[i][j], 'examinationRoomB', currentRoom.toString())
               }
             }
 
             this.$set(this.sortData[i][j], 'examinationNumberA', j + 1 < 10 ? '0' + (j + 1) : (j + 1).toString())
-            this.$set(this.sortData[i][j], 'examinationNumberB', j + 1 < 10 ? '0' + (j + 1) : (j + 1).toString())
-            this.$set(this.sortData[i][j], 'testNumber', this.createTestNumber(this.sortData[i][j].subject, this.sortData[i][j].examinationRoomName, this.sortData[i][j].examinationRoomA, this.sortData[i][j].examinationNumberA))
+            // this.$set(this.sortData[i][j], 'examinationNumberB', j + 1 < 10 ? '0' + (j + 1) : (j + 1).toString())
+            // 水测生成准考证号
+            this.$set(this.sortData[i][j], 'testNumber', this.createEducationNumber(this.sortData[i][j].subject, this.sortData[i][j].examinationRoomName, this.sortData[i][j].examinationRoomA, this.sortData[i][j].examinationNumberA))
+            // 事业单位准考证号
+            // this.$set(this.sortData[i][j], 'testNumber', this.createTestNumber(this.sortData[i][j].subject, this.sortData[i][j].examinationRoomName, this.sortData[i][j].examinationRoomA, this.sortData[i][j].examinationNumberA))
           }
           this.dataToExcel = this.dataToExcel.concat(this.sortData[i])
         }
@@ -202,7 +206,7 @@
       formatJson(filterVal, jsonData) {
         return jsonData.map(v => filterVal.map(j => v[j]))
       },
-      createTestNumber(subject, examinationRoomName, roomNo, examinationNumberA) {
+      createTestNumber(subject, examinationRoomName, roomNo, examinationNumberA) { // 事业单位生成准考证号
         console.log(roomNo, examinationNumberA)
         if (examinationRoomName === '技师学院2号楼') {
           switch (subject) {
@@ -231,32 +235,85 @@
           }
         } else {
           switch (subject) {
-            case '综合管理类（A）':
-              return '200101' + roomNo + examinationNumberA
-            case '社会科学专技类（B）':
-              return '200201' + roomNo + examinationNumberA
-            case '自然科学专技类（C）':
-              return '200301' + roomNo + examinationNumberA
-            case '中小学教师类（D）小学教师':
-              return '200401' + roomNo + examinationNumberA
-            case '中小学教师类（D）中学教师':
-              return '200501' + roomNo + examinationNumberA
-            case '医疗卫生类（E）中医临床':
-              return '200601' + roomNo + examinationNumberA
-            case '医疗卫生类（E）西医临床':
-              return '200701' + roomNo + examinationNumberA
-            case '医疗卫生类（E）药剂':
-              return '200801' + roomNo + examinationNumberA
-            case '医疗卫生类（E）护理':
-              return '200901' + roomNo + examinationNumberA
-            case '医疗卫生类（E）医学技术':
-              return '201001' + roomNo + examinationNumberA
-            case '医疗卫生类（E）公共卫生管理':
-              return '201101' + roomNo + examinationNumberA
+            // case '综合管理类（A）':
+            //   return '200101' + roomNo + examinationNumberA
+            // case '社会科学专技类（B）':
+            //   return '200201' + roomNo + examinationNumberA
+            // case '自然科学专技类（C）':
+            //   return '200301' + roomNo + examinationNumberA
+            // case '中小学教师类（D）小学教师':
+            //   return '200401' + roomNo + examinationNumberA
+            // case '中小学教师类（D）中学教师':
+            //   return '200501' + roomNo + examinationNumberA
+            // case '医疗卫生类（E）中医临床':
+            //   return '200601' + roomNo + examinationNumberA
+            // case '医疗卫生类（E）西医临床':
+            //   return '200701' + roomNo + examinationNumberA
+            // case '医疗卫生类（E）药剂':
+            //   return '200801' + roomNo + examinationNumberA
+            // case '医疗卫生类（E）护理':
+            //   return '200901' + roomNo + examinationNumberA
+            // case '医疗卫生类（E）医学技术':
+            //   return '201001' + roomNo + examinationNumberA
+            // case '医疗卫生类（E）公共卫生管理':
+            //   return '201101' + roomNo + examinationNumberA
+            case '高中语文':
+              return '20200201' + roomNo + examinationNumberA
+            case '高中地理':
+              return '20200202' + roomNo + examinationNumberA
+            case '高中数学':
+              return '20200203' + roomNo + examinationNumberA
+            case '高中政治':
+              return '20200204' + roomNo + examinationNumberA
+            case '高中英语':
+              return '20200205' + roomNo + examinationNumberA
+            case '特殊教育（培智）':
+              return '20200206' + roomNo + examinationNumberA
+            case '高中物理':
+              return '20200207' + roomNo + examinationNumberA
+            case '高中生物':
+              return '20200208' + roomNo + examinationNumberA
+            case '高中化学':
+              return '20200209' + roomNo + examinationNumberA
+            case '高中信息技术':
+              return '20200210' + roomNo + examinationNumberA
+            case '高中历史':
+              return '20200211' + roomNo + examinationNumberA
+              case '特殊教育（盲聋哑）':
+              return '20200212' + roomNo + examinationNumberA
+            case '高中音乐':
+              return '20200213' + roomNo + examinationNumberA
+            case '日语':
+              return '20200214' + roomNo + examinationNumberA
+            case '中职旅游':
+              return '20200215' + roomNo + examinationNumberA
+            case '意大利语':
+              return '20200216' + roomNo + examinationNumberA
+            case '高中心理健康':
+              return '20200217' + roomNo + examinationNumberA
+            case '高中体育':
+              return '20200218' + roomNo + examinationNumberA
+            case '书法':
+              return '20200219' + roomNo + examinationNumberA
+            case '舞蹈':
+              return '20200220' + roomNo + examinationNumberA
           }
         }
       },
-      exportExcel() {
+      createEducationNumber(subject, examinationRoomName, roomNo, examinationNumberA) { // 教育水测生成准考证号
+        console.log(roomNo, examinationNumberA)
+        switch (subject) {
+          case '幼教':
+            return '20200301' + roomNo + examinationNumberA
+          case '小学':
+            return '20200302' + roomNo + examinationNumberA
+          case '初中':
+            return '20200303' + roomNo + examinationNumberA
+          case '高中（含职业高中）':
+            return '20200304' + roomNo + examinationNumberA
+        }
+      },
+      exportExcel() { // 导出事业单位excel
         this.transformData()
         const { export_json_to_excel } = require('@/vendor/Export2Excel')
         // 少一个准考证号，一个报考专业代码
@@ -268,8 +325,21 @@
         const filterVal = ['unit', 'subject', 'job', 'subject',
           'number', 'name',  'id',
           'subjectA', 'placeA', 'dateA', 'timeA',
-          'examinationRoomA', 'examinationNumberA','subjectB', 'placeA', 'dateB', 'timeB',
+          'examinationRoomA', 'examinationNumberA','subjectB', 'placeB', 'dateB', 'timeB',
           'examinationRoomB', 'examinationNumberB', 'testNumber ', 'testNumber']
+        const list = this.dataToExcel
+        const data = this.formatJson(filterVal, list)
+        export_json_to_excel(tHeader, data, this.dataToExcel[0].subject)
+      },
+      exportEducationExcel() { // 导出教育水测excel
+        this.transformData()
+        const { export_json_to_excel } = require('@/vendor/Export2Excel')
+        // 少一个准考证号，一个报考专业代码
+        const tHeader = ['报名序号', '姓名', '身份证号', '准考证号', '报考专业',
+          '考试地点', '考试日期', '考试时间', '考场号', '座位号']
+        const filterVal = ['number', 'name', 'id', 'testNumber',
+          'subject', 'placeA',  'dateA', 'timeA',
+          'examinationRoomA', 'examinationNumberA']
         const list = this.dataToExcel
         const data = this.formatJson(filterVal, list)
         export_json_to_excel(tHeader, data, this.dataToExcel[0].subject)
