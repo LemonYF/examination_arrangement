@@ -36,6 +36,8 @@
       <el-button style="margin-bottom: 10px" type="primary" @click="exportEducationExcel">导出准考证excel</el-button>
       <el-button style="margin-bottom: 10px" type="primary" @click="exportRoomExcel">导出考场安排excel</el-button>
       <el-button style="margin-bottom: 10px" type="primary" @click="resetData">重置所有数据</el-button>
+      <el-button style="margin-bottom: 10px" type="primary" @click="testApi">接口测试</el-button>
+
     </div>
     <!-- 按钮 end -->
 
@@ -67,6 +69,7 @@
 
 <script>
   import XLSX from 'xlsx'
+  import axios from 'axios'
 
   export default {
     name: 'HelloWorld',
@@ -374,6 +377,16 @@
         this.dataToExcel = []
         this.dataToRoomSetExcel = []
         this.sortData = []
+      },
+      testApi() { // 临时用来测试接口
+        let data = {
+          id:2
+        }
+        axios({
+          url:'http://127.0.0.1' + '/user/getUserList',
+          method:'get',
+          params:data
+        }).then(res => {console.log(res)})
       }
     }
   }
