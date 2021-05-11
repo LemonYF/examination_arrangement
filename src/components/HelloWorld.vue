@@ -137,10 +137,13 @@
         fileReader.readAsBinaryString(file)
       },
       reSetData(dataList) {
+        console.log('datalist', dataList)
         let arr = []
         let len = dataList.length
         for (let i = 0; i < len; i += 30) {
-          arr.push(dataList.slice(i, i + 30))
+          if (dataList[i] && dataList[i].examinationNumberA === (i + 1)) {
+            arr.push(dataList.slice(i, i + 30))
+          }
         }
         return arr
       },

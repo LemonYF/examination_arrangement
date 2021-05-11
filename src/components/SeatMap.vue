@@ -1,6 +1,7 @@
 <template>
     <div class="main-container">
-        <h3>生成准考证</h3>
+        <h3>生成座次表</h3>
+        <h4>根据准考证生成对应座次表</h4>
         <p>number	name	id	testNumber	subject	place	date	time	room	seat</p>
         <el-input v-model="title" placeholder="请输入标题，示例：”2020年度襄阳市市直学校公开招聘笔试座次表“"></el-input>
         <p></p>
@@ -25,7 +26,7 @@
 <!--            <span v-if="tableDataLength">共有数据 {{ tableDataLength }} 条</span>-->
 <!--        </div>-->
         <div v-for="(item, index) in sortData" :key="index">
-            <h4 style="margin: 0 auto">{{ title }}</h4>
+            <h4 style="margin: 0 auto">{{ title }}   {{ item[0].room}} 考场</h4>
             <p style="display: flex; justify-content: space-between">
                 <span style="display: inline-block">考点： {{ testPlaceName }}</span>
                 <span v-if="testSubjectB !== ''" style="display: inline-block">科目： {{ testSubjectA }} / {{ testSubjectB }} </span>
@@ -35,7 +36,8 @@
                 <div class="item" v-for="(person, key) in item" :key="key">
                     <img :src="'img/'+ person.number + '.jpg'" alt="">
                     <p>姓名：{{ person.name }}</p>
-                    <p>证号：{{ person.testNumber }}</p>
+                    <p>身份证号：</p>
+                    <p>{{ person.id }}</p>
                     <p><span style="margin-right: 5px">考场： {{ person.room || '' }}</span> <span>座位: {{ person.seat || '' }}</span></p>
                     <p class="formate"><span>进场：</span> <span class="bd-bottom">               </span></p>
                     <p class="formate"><span>离场：</span> <span class="bd-bottom">               </span></p>
@@ -127,7 +129,7 @@
 <style scoped lang="scss">
     .main-container {
         margin: 0 auto;
-        width: 210mm;
+        width: 220mm;
         .header {
             margin-bottom: 30px;
             page-break-after: always;
@@ -145,7 +147,7 @@
             align-items: flex-start;
             .item {
                 font-size: 8px;
-                width: 34.4mm;
+                width: 36.3mm;
                 height: 55mm;
                 border: 1px solid gray;
                 margin: 0 -1px -1px 0;
