@@ -5,6 +5,7 @@ import Router from 'vue-router'
 import HelloWorld from './components/HelloWorld'
 import DataCompare from './components/DataCompare'
 import SeatMap from './components/SeatMap'
+import doorTicket from './components/roomDoorTicket'
 
 
 Vue.use(Router)  //使用插件
@@ -26,6 +27,11 @@ export default new Router({
             path: '/seat',
             name: 'seat',
             component: SeatMap
+        },
+        {
+            path: '/door',
+            name: 'door',
+            component: doorTicket
         }
     ]
 })
