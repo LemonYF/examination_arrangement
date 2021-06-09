@@ -6,6 +6,7 @@ import HelloWorld from './components/HelloWorld'
 import DataCompare from './components/DataCompare'
 import SeatMap from './components/SeatMap'
 import doorTicket from './components/roomDoorTicket'
+import upload from './components/uploadExcel'
 
 
 Vue.use(Router)  //使用插件
@@ -32,6 +33,11 @@ export default new Router({
             path: '/door',
             name: 'door',
             component: doorTicket
+        },
+        {
+            path: '/upload',
+            name: 'upload',
+            component: upload
         }
     ]
 })

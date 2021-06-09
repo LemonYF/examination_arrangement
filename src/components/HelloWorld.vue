@@ -366,7 +366,7 @@
         }
         const { export_json_to_excel } = require('@/vendor/Export2Excel')
         // 少一个准考证号，一个报考专业代码
-        const tHeader = ['准考证号区间', '考点', '考试类别', '考场号'
+        const tHeader = ['报名序号', '考点', '考试类别', '考场号'
           , '人数', '具体教室']
         const filterVal = ['numberInterregional', 'place', 'subject', 'examinationRoom',
           'number',  'id ']
