@@ -2,11 +2,12 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 //import组件模块
-import HelloWorld from './components/HelloWorld'
+import HelloWorld from './components/HelloWorld' // 忘了
 import DataCompare from './components/DataCompare'
-import SeatMap from './components/SeatMap'
-import doorTicket from './components/roomDoorTicket'
-import upload from './components/uploadExcel'
+import SeatMap from './components/SeatMap'  // 生成座位图
+import doorTicket from './components/roomDoorTicket'  // 生成考场门贴
+import upload from './components/uploadExcel'  // 数据对比
+import generateList from './components/generateList' // 生成资格复审名单
 
 
 Vue.use(Router)  //使用插件
@@ -38,6 +39,11 @@ export default new Router({
             path: '/upload',
             name: 'upload',
             component: upload
+        },
+        {
+            path: '/generateList',
+            name: 'generateList',
+            component: generateList
         }
     ]
 })

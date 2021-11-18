@@ -16,14 +16,20 @@
 
         <div v-for="(item, index) in doorTicket" :key="index">
             <div class="container">
-                <h1>2021年度襄阳市中小学教师高、中级专业技术职务水平能力测试</h1>
-                <p> 襄阳职业技术学院南校区惠济楼</p>
-                <p> 第{{ item.room }}考场</p>
-                <p style="font-weight: 700">{{item.subject}}({{ item.count }})人</p>
+                <h1>2021年度襄阳东津新区（经开区）六两河街道所属事业单位公开招聘工作人员笔试</h1>
+                <!-- <h1>公开招聘工作人员笔试</h1> -->
+                <!-- <p> 襄阳职业技术学院智造工业中心B栋</p> -->
+                <p>  </p>
+                <p> 第<span :style="{'font-weight': 'bold', 'font-size': '80px'}">{{ item.room }}</span>考场</p>
+                <!-- <p style="font-weight: 700">{{item.subject}}({{ item.count }})人</p> -->
+                <p style="font-weight: 700">({{ item.count }})人</p>
                 <p> {{ item.minNumber }} - {{ item.maxNumber }}</p>
                 <div class="line"></div>
-                <p>2021年5月15日上午</p>
-                <p> 09:00—11:00  《综合能力测试》 </p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p>2021年11月13日上午</p>
+                <p> 08:30-12:00 </p>
             </div>
         </div>
     </div>
@@ -143,10 +149,11 @@
             align-items: flex-start;
             h1 {
                 width: 100%;
-                font-size: 70px;
+                font-size: 64px;
                 color: black;
                 margin-top: 10px;
                 margin-bottom: 10px;
+                font-weight: bold;
                 font-family: "SimHei"
             }
             h2 {

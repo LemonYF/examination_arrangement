@@ -95,7 +95,6 @@
             },
             exportRoomExcel() {
                 const { export_json_to_excel } = require('@/vendor/Export2Excel')
-                // 少一个准考证号，一个报考专业代码
                 const tHeader = ['姓名', '工作单位', '报名序号', '报名点'
                     , '身份证号', '性别', '准考证号', '证书编号']
                 const filterVal = ['name', 'unit', 'key', 'place',
@@ -106,15 +105,7 @@
             },
             formatJson(filterVal, jsonData) {
                 return jsonData.map(v => filterVal.map(j => v[j]))
-            },
-            // reSetData(dataList) {
-            //     let arr = []
-            //     let len = dataList.length
-            //     for (let i = 0; i < len; i += 30) {
-            //         arr.push(dataList.slice(i, i + 30))
-            //     }
-            //     return arr
-            // },
+            }
         }
     }
 
