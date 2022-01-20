@@ -37,7 +37,6 @@
       <el-button style="margin-bottom: 10px" type="primary" @click="exportRoomExcel">导出考场安排excel</el-button>
       <el-button style="margin-bottom: 10px" type="primary" @click="resetData">重置所有数据</el-button>
       <el-button style="margin-bottom: 10px" type="primary" @click="testApi">接口测试</el-button>
-
     </div>
     <!-- 按钮 end -->
 
@@ -54,7 +53,7 @@
         <span v-else style="display: inline-block">科目： {{ testSubjectA }} </span>
       </p>
       <div class="container">
-        <div class="item" v-for="(person, key) in item" :key="key">
+        <div class="item" v-for="(person, key) in item" :key="key"> 
           <img :src="'img/'+ person.number + '.jpg'" alt="">
           <p>姓名：{{ person.name }}</p>
           <p>证号：{{ person.testNumber }}</p>
@@ -137,12 +136,11 @@
         fileReader.readAsBinaryString(file)
       },
       reSetData(dataList) {
-        console.log('datalist', dataList)
         let arr = []
         let len = dataList.length
         for (let i = 0; i < len; i += 30) {
           if (dataList[i] && dataList[i].examinationNumberA === (i + 1)) {
-            arr.push(dataList.slice(i, i + 30))
+          arr.push(dataList.slice(i, i + 30))
           }
         }
         return arr
@@ -366,7 +364,7 @@
         }
         const { export_json_to_excel } = require('@/vendor/Export2Excel')
         // 少一个准考证号，一个报考专业代码
-        const tHeader = ['报名序号', '考点', '考试类别', '考场号'
+        const tHeader = ['准考证号区间', '考点', '考试类别', '考场号'
           , '人数', '具体教室']
         const filterVal = ['numberInterregional', 'place', 'subject', 'examinationRoom',
           'number',  'id ']
@@ -380,7 +378,7 @@
         this.dataToExcel = []
         this.dataToRoomSetExcel = []
         this.sortData = []
-      },
+  },
       testApi() { // 临时用来测试接口
         let data = {
           id:2

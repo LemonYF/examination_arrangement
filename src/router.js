@@ -8,6 +8,8 @@ import SeatMap from './components/SeatMap'  // 生成座位图
 import doorTicket from './components/roomDoorTicket'  // 生成考场门贴
 import upload from './components/uploadExcel'  // 数据对比
 import generateList from './components/generateList' // 生成资格复审名单
+import addData from './components/addKeyItem' // 添加特定数据列
+import generateWorkerCert from './components/generateWorkerCert'
 
 
 Vue.use(Router)  //使用插件
@@ -44,6 +46,16 @@ export default new Router({
             path: '/generateList',
             name: 'generateList',
             component: generateList
+        },
+        {
+            path: '/addData',
+            name: 'addData',
+            component: addData
+        },
+        {
+            path: '/generateWorkerCert',
+            name: 'generateWorkerCert',
+            component: generateWorkerCert
         }
     ]
 })

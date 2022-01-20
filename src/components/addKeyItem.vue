@@ -3,7 +3,7 @@
         <p>使用说明：此功能是为了给特定表增加字段，比如考生名单表里根据另一个表的字段增加成绩</p>
         <el-input v-model="dataKey" placeholder="请输入需要对比的key（唯一指定）"></el-input>
         <p></p>
-        <el-input v-model="dataValue" placeholder="请输入需要对比的对应key的Value"></el-input>
+        <el-input v-model="dataValue" placeholder="请输入需要增加的对应key"></el-input>
         <p></p>
         <div style="flex: 1">
             <!-- 按钮 -->
@@ -30,6 +30,7 @@
             <!-- 按钮 end -->
         </div>
         <el-button style="margin-top: 10px" type="primary" @click="addData">添加数据</el-button>
+        <el-button style="margin-bottom: 10px" type="primary" @click="exportList">导出数据添加后名单</el-button>
 
     </div>
 </template>
@@ -37,7 +38,7 @@
 <script>
     import XLSX from 'xlsx'
     export default {
-        name: "DataCompare",
+        name: "addKeyItem",
         data() {
             return {
                 dataKey: '',
@@ -124,11 +125,33 @@
             addData() {
                 for (let i = 0; i < this.tableData.length; i++) {
                     for (let j = 0; j < this.sourceData.length; j++) {
-                        if (this.tableData[i].name === this.sourceData[j].name && this.tableData[i].id === this.sourceData[j].id) {
-                            this.result.push('第'+ j + '条数据' + this.tableData[i].name + '已找到')
+                        if(this.tableData[i].id == this.sourceData[j].id) {
+                            this.tableData[i].grade = this.sourceData[j].grade
                         }
+                        // if (this.tableData[i].name === this.sourceData[j].name && this.tableData[i].id === this.sourceData[j].id) {
+                        //     this.result.push('第'+ j + '条数据' + this.tableData[i].name + '已找到')
+                        // }
                     }
                 }
+                console.log(this.tableData)
+            },
+            exportList() {
+                // this.dataToExcel = []
+                // for (let i = 0; i < this.unitData.length; i++) {
+                //     for (let j = 0; j < this.unitData[i].length; j++) {
+                //         this.dataToExcel.push(this.unitData[i][j])
+                //     }
+                // }
+                const { export_json_to_excel } = require('@/vendor/Export2Excel')
+                // 少一个准考证号，一个报考专业代码
+                const tHeader = ['身份证号\n', '分数\n']
+                const filterVal = ['id', 'grade']
+                const list = this.tableData
+                const data = this.formatJson(filterVal, list)
+                export_json_to_excel(tHeader, data, '终表')
+            },
+            formatJson(filterVal, jsonData) {
+                return jsonData.map(v => filterVal.map(j => v[j]))
             }
         }
     }
