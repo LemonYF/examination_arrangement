@@ -9,6 +9,7 @@ import doorTicket from './components/roomDoorTicket'  // 生成考场门贴
 import upload from './components/uploadExcel'  // 数据对比
 import generateList from './components/generateList' // 生成资格复审名单
 import addData from './components/addKeyItem' // 添加特定数据列
+import dataScreen from './components/dataScreen' // 添加特定数据列
 import generateWorkerCert from './components/generateWorkerCert'
 
 
@@ -51,6 +52,11 @@ export default new Router({
             path: '/addData',
             name: 'addData',
             component: addData
+        },
+        {
+            path: '/dataScreen',
+            name: 'dataScreen',
+            component: dataScreen
         },
         {
             path: '/generateWorkerCert',

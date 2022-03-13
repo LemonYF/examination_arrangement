@@ -17,8 +17,8 @@
           <div class="right">
             <div class="left-right-top"></div>
             <div class="left-right-bottom">
-              <span style="padding-top:10px;">{{ item.name }}</span>
-              <span style="padding-top:13px;">{{ item.sex }}</span>
+              <span style="padding-top:0px;">{{ item.name }}</span>
+              <span style="padding-top:15px;">{{ item.sex }}</span>
               <span>{{ item.id }}</span>
               <span style="font-size: 20px">{{ item.subject }}</span>
               <div class="work-unit">
@@ -35,7 +35,7 @@
             <img :src="'img/'+ item.id + '.jpg'" alt="">
           </div>
           <div class="right-bottom">
-            <div class="right-bottom-top"><span>2021</span></div>
+            <div class="right-bottom-top"><span  style="margin-top:-10px;">2021</span></div>
             <div class="right-bottom-center"><span>{{ item.level }}</span></div>
             <div class="right-bottom-bottom">
               <span style="padding-top:20px;padding-left:220px;"></span>
@@ -158,7 +158,7 @@ export default {
               }
             }
             .blank_space {
-              height: 62px;
+              height: 67px;
               width: 100%;
               background-color: rgb(243, 171, 210);
             }
