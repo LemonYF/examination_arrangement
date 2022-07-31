@@ -123,16 +123,26 @@
                 fileReader.readAsBinaryString(file)
             },
             addData() {
-                console.log('开始增加数据')
+                alert('开始增加数据')
                 for (let i = 0; i < this.tableData.length; i++) {
+                    let flag = 0
                     for (let j = 0; j < this.sourceData.length; j++) {
                         if(this.tableData[i].id === this.sourceData[j].id) {
+                            flag = 1
+                            console.log(' flag = 1  找到一个相同的', this.tableData[i].name, i+1)
+                            // if (this.tableData[j] && this.tableData[j].status == '合格') {
+                            //     return
+                            // }
                             this.tableData[i].status = this.sourceData[j].status
                             this.tableData[i].subject1 = this.sourceData[j].subject
+                            if (this.tableData[j] && this.tableData[j].status == '不合格') {
+                                this.tableData[i].status = '水测成绩不合格'
+                            }
                         }
-                        // if (this.tableData[i].name === this.sourceData[j].name && this.tableData[i].id === this.sourceData[j].id) {
-                        //     this.result.push('第'+ j + '条数据' + this.tableData[i].name + '已找到')
-                        // }
+                    }
+                    if (!flag) {
+                        console.log(' flag = 0  未找到', this.tableData[i].name, i+1)
+                        this.tableData[i].status = '水测成绩查无此人'
                     }
                 }
                 alert('数据增加成功')
@@ -153,7 +163,8 @@
                     'time', 'time1', 'year', 'zhicheng', 'type', 'jixu', '2019', '2020', 'year1', 'grade', 'phone', 'remark', 'status', 'subject1']
                 const list = this.tableData
                 const data = this.formatJson(filterVal, list)
-                export_json_to_excel(tHeader, data, '终表')
+                const timestamp = Date.parse(new Date()) 
+                export_json_to_excel(tHeader, data, '终表'+ timestamp)
             },
             formatJson(filterVal, jsonData) {
                 return jsonData.map(v => filterVal.map(j => v[j]))

@@ -10,7 +10,8 @@ import upload from './components/uploadExcel'  // 数据对比
 import generateList from './components/generateList' // 生成资格复审名单
 import addData from './components/addKeyItem' // 添加特定数据列
 import dataScreen from './components/dataScreen' // 添加特定数据列
-import generateWorkerCert from './components/generateWorkerCert'
+import generateWorkerCert from './components/generateWorkerCert'//生成公考准考证
+import generateAuditionList from './components/generateAuditionList'
 
 
 Vue.use(Router)  //使用插件
@@ -62,6 +63,11 @@ export default new Router({
             path: '/generateWorkerCert',
             name: 'generateWorkerCert',
             component: generateWorkerCert
+        },
+        {
+            path: '/generateAuditionList',
+            name: 'generateAuditionList',
+            component: generateAuditionList
         }
     ]
 })
