@@ -1,8 +1,5 @@
 <template>
 <!--    生成资格复审名单, 后面时间安排表的人员列表，一个单元格显示多个人员名单-->
-<!--    number	id	name	testCode	cityCode	unitCode	jobCode	ratio	need	call
-	qk1	qk2	grade1	grade2	totalgrade	update	updategrade codeKey-->
-<!--    使用说明: 字段为以上字段,总分排序按照updategrade排序,必须要有比例和人数 codeKey为unitCod+jobCode-->
     <div>
         <!-- 上传原始数据按钮 -->
         <el-upload

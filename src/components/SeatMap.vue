@@ -34,7 +34,12 @@
             </p>
             <div class="container">
                 <div class="item" v-for="(person, key) in item" :key="key">
-                    <img :src="'img/'+ person.number + '.jpg'" alt="">
+                    <!-- 针对只有人员编号的照片 -->
+                    <!-- <img :src="'img/'+ person.number + '.jpg'" alt=""> -->
+                    <!-- 针对只有人员ID的照片 -->
+                    <img :src="'img/'+ person.id +'.jpg'" alt="">
+                    <!-- 针对人员姓名+ID的照片 -->
+                    <!-- <img :src="'img/'+ person.name + person.id + '.jpg'" alt=""> -->
                     <p>姓名：{{ person.name }}</p>
                     <p>身份证号：</p>
                     <p>{{ person.id }}</p>

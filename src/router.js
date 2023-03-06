@@ -10,8 +10,9 @@ import upload from './components/uploadExcel'  // 数据对比
 import generateList from './components/generateList' // 生成资格复审名单
 import addData from './components/addKeyItem' // 添加特定数据列
 import dataScreen from './components/dataScreen' // 添加特定数据列
-import generateWorkerCert from './components/generateWorkerCert'//生成公考准考证
+import generateWorkerCert from './components/generateWorkerCert'//生成工考证书
 import generateAuditionList from './components/generateAuditionList'
+import homePage from './components/homepage'
 
 
 Vue.use(Router)  //使用插件
@@ -22,6 +23,11 @@ export default new Router({
         {
             path: '/',   //  定义为/会默认显示这个页面
             name: 'home',
+            component: homePage,
+        },
+        {
+            path: '/helloWorld',   //  定义为/会默认显示这个页面
+            name: 'helloWorld',
             component: HelloWorld,
         },
         {
@@ -68,6 +74,11 @@ export default new Router({
             path: '/generateAuditionList',
             name: 'generateAuditionList',
             component: generateAuditionList
+        },
+        {
+            path: '/homePage',
+            name: 'homePage',
+            component: homePage
         }
     ]
 })

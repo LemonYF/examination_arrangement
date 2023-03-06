@@ -39,7 +39,7 @@
     import XLSX from "xlsx"
 
     export default {
-        name: "SeatMap",
+        name: "door",
         data () {
             return {
                 tableData: [],
