@@ -41,7 +41,7 @@ export default new Router({
             component: SeatMap
         },
         {
-            path: '/door',
+            path: '/doorTicket',
             name: 'door',
             component: doorTicket
         },

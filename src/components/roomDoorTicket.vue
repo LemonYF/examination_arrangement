@@ -3,6 +3,17 @@
         <h3>生成教育水平能力测试门贴</h3>
         <h4>根据准考证生成对应门贴</h4>
         <p>number	name	id	testNumber	subject	place	date	time	room	seat</p>
+        <el-input v-model="title" placeholder="请输入标题，示例：”2020年度襄阳市市直学校公开招聘“"></el-input>
+        <p></p>
+        <el-input v-model="testPlaceName" placeholder="请输入考点名称，示例：”襄阳技师学院（东津）"></el-input>
+        <p></p>
+        <el-input v-model="testDate" placeholder="请输入考试日期，示例：”2021年11月13日上午“"></el-input>
+        <p></p>
+        <el-input v-model="testTime" placeholder="请输入考试时间，示例：”09:00-11:30“"></el-input>
+        <p></p>
+        <p></p>
+        <el-input v-model="testSubject" placeholder="请输入考试科目，示例：”职业能力倾向测验“"></el-input>
+        <p></p>
         <el-upload
                 class="upload"
                 action=""
@@ -16,20 +27,25 @@
 
         <div v-for="(item, index) in doorTicket" :key="index">
             <div class="container">
-                <h1>2021年度襄阳东津新区（经开区）六两河街道所属事业单位公开招聘工作人员笔试</h1>
+                <h1>{{ title }}</h1>
                 <!-- <h1>公开招聘工作人员笔试</h1> -->
                 <!-- <p> 襄阳职业技术学院智造工业中心B栋</p> -->
                 <p>  </p>
                 <p> 第<span :style="{'font-weight': 'bold', 'font-size': '80px'}">{{ item.room }}</span>考场</p>
                 <!-- <p style="font-weight: 700">{{item.subject}}({{ item.count }})人</p> -->
+                <p style="font-weight: 700">考试科目：{{ testSubject }}</p>
                 <p style="font-weight: 700">({{ item.count }})人</p>
-                <p> {{ item.minNumber }} - {{ item.maxNumber }}</p>
+                <p></p>
+                <p></p>
                 <div class="line"></div>
                 <p></p>
                 <p></p>
                 <p></p>
-                <p>2021年11月13日上午</p>
-                <p> 08:30-12:00 </p>
+                <p> {{ item.minNumber }} - {{ item.maxNumber }}</p>
+                <p></p>
+                <p></p>
+                <p>{{ testDate }} {{ testTime }}</p>
+                <!-- <p>{{ testTime }}</p> -->
             </div>
         </div>
     </div>
@@ -47,7 +63,11 @@
                 picUrl: 'logo.png',
                 doorTicket: [],
                 maxNumber: 0,
-
+                title: '干部综合素质拉练笔试', // 考试名称
+                testPlaceName: '襄阳技师学院（东津）', // 考点名称
+                testDate: '2023年3月1日', // 考试日期
+                testTime: '09:00-11:30', //考试时间
+                testSubject: "综合能力知识",
                 sortData: [] // 处理后的数据，每30个为一个数组
             }
         },
