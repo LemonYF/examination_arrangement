@@ -17,8 +17,8 @@
           <div class="right">
             <div class="left-right-top"></div>
             <div class="left-right-bottom">
-              <span style="padding-top:0px;">{{ item.name }}</span>
-              <span style="padding-top:15px;">{{ item.sex }}</span>
+              <span style="padding-top:10px;">{{ item.name }}</span>
+              <span style="padding-top:25px;">{{ item.sex }}</span>
               <span>{{ item.id }}</span>
               <span style="font-size: 20px">{{ item.subject }}</span>
               <div class="work-unit">
@@ -26,7 +26,7 @@
               </div>
               
               <div class="blank_space"></div>
-              <span>2021年12月31日</span>
+              <span>2022年12月15日</span>
             </div>
           </div>
         </div>
@@ -35,14 +35,14 @@
             <img :src="'img/'+ item.id + '.jpg'" alt="">
           </div>
           <div class="right-bottom">
-            <div class="right-bottom-top"><span  style="margin-top:-10px;">2021</span></div>
+            <div class="right-bottom-top"><span  style="margin-top:0px;">2022</span></div>
             <div class="right-bottom-center"><span>{{ item.level }}</span></div>
             <div class="right-bottom-bottom">
-              <span style="padding-top:20px;padding-left:220px;"></span>
+              <span style="padding-top:20px;padding-left:210px;"></span>
               <span class="unit">襄阳市机关事业单位工人技术等级岗位考核办公室</span>
-              <span style="padding-top:20px;padding-left:220px;"></span>
-              <span>{{ item.managerNumber }}</span>
-              <span style="padding-top:5px;padding-left:350px;font-size:14px">湖北省襄阳市</span>
+              <span style="padding-top:20px;padding-left:210px;"></span>
+              <span style="padding-left:168px;">{{ item.managerNumber }}</span>
+              <span style="padding-top:5px;padding-left:330px;font-size:14px">湖北省襄阳市</span>
             </div>
           </div>
         </div>
@@ -236,7 +236,7 @@ export default {
               display: block;
               font-family: SimSun;
               font-size: 12px;
-              padding-left: 172px;
+              padding-left: 168px;
             }
           }
         }
