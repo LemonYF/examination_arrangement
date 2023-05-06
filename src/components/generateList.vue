@@ -1,6 +1,6 @@
 <template>
 <!--    生成资格复审名单-->
-<!--    number	id	name	testCode	cityCode	unitCode	jobCode	ratio	need	call
+<!--    number	id	name	testCode	cityCode	unitCode	testCode	ratio	need	call
 	qk1	qk2	grade1	grade2	totalgrade	update	updategrade codeKey-->
 <!--    使用说明: 字段为以上字段,总分排序按照updategrade排序,必须要有比例和人数 codeKey为unitCod+jobCode-->
     <div>
