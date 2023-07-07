@@ -3,7 +3,7 @@
         <h3>生成座次表</h3>
         <h4>根据准考证生成对应座次表</h4>
         <p>number	name	id	testNumber	subject	place	date	time	room	seat</p>
-        <el-input v-model="title" placeholder="请输入标题，示例：”2020年度襄阳市市直学校公开招聘笔试座次表“"></el-input>
+        <el-input v-model="title" placeholder="请输入标题，示例：”襄阳市2023年专项引进紧缺人才笔试座次表“"></el-input>
         <p></p>
         <el-input v-model="testPlaceName" placeholder="请输入考点名称，示例：”襄阳技师学院（东津）“"></el-input>
         <p></p>
@@ -37,9 +37,11 @@
                     <!-- 针对只有人员编号的照片 -->
                     <!-- <img :src="'img/'+ person.number + '.jpg'" alt=""> -->
                     <!-- 针对只有人员ID的照片 -->
-                    <img :src="'img/'+ person.id +'.jpg'" alt="">
+                    <!-- <img :src="'img/'+ person.id +'.jpg'" alt=""> -->
                     <!-- 针对人员姓名+ID的照片 -->
                     <!-- <img :src="'img/'+ person.name + person.id + '.jpg'" alt=""> -->
+                    <!-- 针对人员姓名的照片 -->
+                    <img :src="'img/'+ person.name + '.jpg'" alt="">
                     <p>姓名：{{ person.name }}</p>
                     <p>身份证号：</p>
                     <p>{{ person.id }}</p>
@@ -62,11 +64,11 @@
                 tableData: [],
                 tableDataLength: '',
                 hasClick: false,
-                testPlaceName: '襄阳技师学院（东津）', // 考点名称
+                testPlaceName: '', // 考点名称
                 testDate: '2020年8月9日', // 考试日期
-                title: '2020年度襄阳市市直学校公开招聘笔试座次表', // 标题
-                testSubjectA: '职业能力倾向测验', // 考试科目
-                testSubjectB: '综合应用能力', // 考试科目
+                title: '笔试座次表', // 标题
+                testSubjectA: '综合能力知识', // 考试科目
+                testSubjectB: '', // 考试科目
                 testTimeA: '8:30 - 10:00',
                 testTimeB: '10:00 - 12:00',
                 picUrl: 'logo.png',

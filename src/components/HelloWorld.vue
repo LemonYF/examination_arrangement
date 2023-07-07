@@ -80,9 +80,9 @@
         tableData: [],
         tableDataLength: '',
         hasClick: false,
-        testPlaceName: '襄阳技师学院（东津）', // 考点名称
-        testDate: '2020年8月9日', // 考试日期
-        title: '2020年度襄阳市市直学校公开招聘笔试座次表', // 标题
+        testPlaceName: '襄阳职业技术学院商学院笃学楼', // 考点名称
+        testDate: '2023年6月4日', // 考试日期
+        title: '襄阳市2023年专项引进紧缺人才笔试', // 标题
         testSubjectA: '职业能力倾向测验', // 考试科目
         testSubjectB: '综合应用能力', // 考试科目
         testTimeA: '8:30 - 10:00',

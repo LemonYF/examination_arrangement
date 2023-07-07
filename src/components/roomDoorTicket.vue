@@ -12,7 +12,8 @@
         <el-input v-model="testTime" placeholder="请输入考试时间，示例：”09:00-11:30“"></el-input>
         <p></p>
         <p></p>
-        <el-input v-model="testSubject" placeholder="请输入考试科目，示例：”职业能力倾向测验“"></el-input>
+        <el-input v-model="testSubjectA" placeholder="请输入考试科目，示例：”职业能力倾向测验“"></el-input>
+        <el-input v-model="testSubjectB" placeholder="请输入考试科目，示例：”职业能力倾向测验“"></el-input>
         <p></p>
         <el-upload
                 class="upload"
@@ -33,7 +34,7 @@
                 <p>  </p>
                 <p> 第<span :style="{'font-weight': 'bold', 'font-size': '80px'}">{{ item.room }}</span>考场</p>
                 <!-- <p style="font-weight: 700">{{item.subject}}({{ item.count }})人</p> -->
-                <p style="font-weight: 700">考试科目：{{ testSubject }}</p>
+                <p style="font-weight: 700">{{ testSubjectA }} / {{ testSubjectB }}</p>
                 <p style="font-weight: 700">({{ item.count }})人</p>
                 <p></p>
                 <p></p>
@@ -63,11 +64,12 @@
                 picUrl: 'logo.png',
                 doorTicket: [],
                 maxNumber: 0,
-                title: '干部综合素质拉练笔试', // 考试名称
-                testPlaceName: '襄阳技师学院（东津）', // 考点名称
-                testDate: '2023年3月1日', // 考试日期
-                testTime: '09:00-11:30', //考试时间
-                testSubject: "综合能力知识",
+                title: '襄阳市2023年专项引进紧缺人才笔试', // 考试名称
+                testPlaceName: '襄阳职业技术学院隆中校区', // 考点名称
+                testDate: '2023年6月4日', // 考试日期
+                testTime: '08:30-10:00', //考试时间
+                testSubjectA: "职业能力倾向测验",
+                testSubjectB: "综合应用能力",
                 sortData: [] // 处理后的数据，每30个为一个数组
             }
         },
