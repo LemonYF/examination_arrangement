@@ -34,7 +34,9 @@
                 <p>  </p>
                 <p> 第<span :style="{'font-weight': 'bold', 'font-size': '80px'}">{{ item.room }}</span>考场</p>
                 <!-- <p style="font-weight: 700">{{item.subject}}({{ item.count }})人</p> -->
-                <p style="font-weight: 700">{{ testSubjectA }} / {{ testSubjectB }}</p>
+                <p v-if="testSubjectB !== ''" style="display: inline-block;font-weight: 700">科目： {{ testSubjectA }} / {{ testSubjectB }} </p>
+                <p v-else style="display: inline-block">科目： {{ testSubjectA }} </p>
+                <!-- <p style="font-weight: 700">{{ testSubjectA }} / {{ testSubjectB }}</p> -->
                 <p style="font-weight: 700">({{ item.count }})人</p>
                 <p></p>
                 <p></p>

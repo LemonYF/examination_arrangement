@@ -1,7 +1,8 @@
 <template>
 <!--    生成资格复审名单-->
-<!--    number	id	name	testCode	cityCode	unitCode	testCode	ratio	need	call
+<!--    number	id	name	testCode	cityCode	unitCode	codeKey 	ratio	need	call
 	qk1	qk2	grade1	grade2	totalgrade	update	updategrade codeKey-->
+<!-- 处理逻辑为当总人数少于资格复审人数时，全部进入资格复审，如果总人数大于资格复审人数，则从招录人数*比例的人数号码开始比较每下一个成绩，成绩相同则都进入资格复审，成绩不同，则终止 -->
 <!--    使用说明: 字段为以上字段,总分排序按照updategrade排序,必须要有比例和人数 codeKey为unitCod+jobCode-->
     <div>
         <!-- 上传原始数据按钮 -->
@@ -29,6 +30,7 @@
                 excelData: [], //原始数据
                 excelDataLength: '', // 原始数据长度
                 unitData: [], // 按照单位进行分组,去掉缺考的人,是一个二维数组
+                examieeList: [], // 
                 dataToExcel: [], // 生成复审名单待导出的数据
             }
         },
@@ -37,6 +39,7 @@
                 let file = e.file // 文件信息
                 console.log('e: ', e)
                 console.log('file: ', e.file)
+                this.dataToExcel = []
 
                 if (!file) {
                     // 没有文件
@@ -83,69 +86,61 @@
                 this.unitData = arr // 生成了每个岗位单独的二维数组,下一步将缺考信息删除
                 for (let i = 0; i < this.unitData.length; i++) {
                     for (let j = 0 ; j < this.unitData[i].length; j++) {
-                        if( this.unitData[i][j].qk1 === 'Q'){
+                        if( this.unitData[i][j].updategrade === 0){
                             // console.log('删除考生', this.unitData[i][j].name)
                             this.unitData[i].splice(j, 1) // 此时unitData是按照岗位划分,并且没有缺考考生的二维数组
                             j--
                         }
                     }
                 }
-                for (let i = 0; i < this.unitData.length; i++) {
-                    if( this.unitData[i].length === 0){
-                        console.log(11111, i)
-                        this.unitData.splice(i, 1) // 此时unitData是按照岗位划分,并且没有缺考考生的二维数组
-                    }
-                }
+                console.log('无缺考考生名单', this.unitData)
+                // for (let i = 0; i < this.unitData.length; i++) {
+                //     if( this.unitData[i].length === 0){
+                //         // console.log(11111, i)
+                //         this.unitData.splice(i, 1) // 此时unitData是按照岗位划分,并且没有缺考考生的二维数组
+                //     }
+                // }
                 // 下一步,按照每个子数组第一个考生的招聘人数及比例,算出该岗位正常进面人数
                 for (let i = 0; i < this.unitData.length; i++) {
-                    const requireNumber = this.unitData[i][0].ratio *  this.unitData[i][0].need
-                    console.log(requireNumber, this.unitData[i][0].jobCode)
-                    if (requireNumber < this.unitData[i].length) {  //当总人数多余进面人数要求时,按照正常流程进行
-                        // console.log(111)
-                        // const gradeArr = [] // 成绩前三数组
-                        let totalPeople = 0 // 设置最开始人数为0,每有一个符合条件的加1,直到不符合条件
-                        for (let j = 0 ; j < this.unitData[i].length; j++) { // 遍历每一个子数组里面的内容
-                            if (j === 0) { // 第一个成绩
-                                totalPeople = totalPeople + 1
-                            } else {
-                                if (this.unitData[i][j].updategrade === this.unitData[i][j-1].updategrade) {
-                                    totalPeople = totalPeople + 1
-                                }
-                                if (this.unitData[i][j].updategrade !== this.unitData[i][j-1].updategrade && totalPeople < requireNumber) {
-                                    totalPeople = totalPeople + 1
-                                }
-                                if (this.unitData[i][j].updategrade !== this.unitData[i][j-1].updategrade && totalPeople >= requireNumber) { // 不满足条件,返回
-                                    console.log('不满足条件', this.unitData[i][j].name)
-                                    this.unitData[i] = this.unitData[i].slice(0, totalPeople)
-                                    break
-                                }
-                                // else {
-                                //     console.log('不满足条件', this.unitData[i][j].name)
-                                //     this.unitData[i] = this.unitData[i].slice(0, totalPeople)
-                                //     break
-                                // }
-                            }
-
+                    const requireNumber = this.unitData[i][0].ratio * this.unitData[i][0].need
+                    console.log(requireNumber, this.unitData[i][0].codeKey) 
+                    if (requireNumber >= this.unitData[i].length) {
+                        // 当总人数少于资格复审人数时，全部进入资格复审
+                        for(let j = 0; j < this.unitData[i].length; j++) {
+                            this.examieeList.push(this.unitData[i][j])
                         }
-                    } else { //否则全部进面
-                        // console.log(222)
+                    } else { // 如果总人数大于资格复审人数，则从招录人数*比例的人数号码开始比较每下一个成绩，成绩相同则都进入资格复审，成绩不同，则终止
+                        console.log(this.unitData[i][0].unitCode, this.unitData[i][0].job, this.unitData[i].length)
+                        for (let j = 0 ; j < this.unitData[i].length; j++) {
+                            if (j < requireNumber) { // 人数没超过require人数时，直接push
+                                this.examieeList.push(this.unitData[i][j])
+                            } 
+                            else {
+                                if (this.unitData[i][j].updategrade === this.unitData[i][j-1].updategrade) {
+                                    console.log("j", j)
+                                    console.log(this.unitData[i][j], this.unitData[i][j-1])
+                                    this.examieeList.push(this.unitData[i][j])
+                                } else {
+                                    break;
+                                }
+                            } 
+                        }
                     }
+                    console.log('第', i + 1, '个岗位', this.examieeList)
                 }
+                console.log('111111111112222222222', this.examieeList)
             },
             exportList() {
-                this.dataToExcel = []
-                for (let i = 0; i < this.unitData.length; i++) {
-                    for (let j = 0; j < this.unitData[i].length; j++) {
-                        this.dataToExcel.push(this.unitData[i][j])
-                    }
-                }
+                this.dataToExcel = this.examieeList
+                // for (let i = 0; i < this.unitData.length; i++) {
+                //     for (let j = 0; j < this.unitData[i].length; j++) {
+                //         this.dataToExcel.push(this.unitData[i][j])
+                //     }
+                // }
                 const { export_json_to_excel } = require('@/vendor/Export2Excel')
                 // 少一个准考证号，一个报考专业代码
-                const tHeader = ['准考证号\n', '身份证号\n', '姓名\n', '考试类别\n'
-                    , '地市代码\n', '报考部门代码\n', '职位代码\n', '职位招考比例\n', '职位招考人数\n'
-                    , '电话\n', '职测缺考标记\n', '综合缺考标记\n', '职测分数\n', '综合分数\n', '总分\n', '优惠加分\n', '加分后分数\n']
-                const filterVal = ['number',	'id',	'name',	'testCode',	'cityCode',	'unitCode',	'jobCode',	'ratio',	'need',	'call',
-                    'qk1',	'qk2',	'grade1',	'grade2',	'totalgrade',	'update',	'updategrade', 'codeKey']
+                const tHeader = ['准考证号\n', '身份证号\n', '姓名\n', '职位代码\n', '职位招考比例\n', '职位招考人数\n', '加分后分数\n']
+                const filterVal = ['testCode',	'id',	'name',	'codeKey',	'ratio',  'need',	'updategrade']
                 const list = this.dataToExcel
                 const data = this.formatJson(filterVal, list)
                 export_json_to_excel(tHeader, data, '资格复审名单')

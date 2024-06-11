@@ -26,7 +26,7 @@
               </div>
               
               <div class="blank_space"></div>
-              <span>2022年12月15日</span>
+              <span>2019年12月18日</span>
             </div>
           </div>
         </div>
@@ -35,7 +35,7 @@
             <img :src="'img/'+ item.id + '.jpg'" alt="">
           </div>
           <div class="right-bottom">
-            <div class="right-bottom-top"><span  style="margin-top:0px;">2022</span></div>
+            <div class="right-bottom-top"><span  style="margin-top:0px;">2019</span></div>
             <div class="right-bottom-center"><span>{{ item.level }}</span></div>
             <div class="right-bottom-bottom">
               <span style="padding-top:20px;padding-left:210px;"></span>

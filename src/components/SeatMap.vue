@@ -39,14 +39,16 @@
                     <!-- 针对只有人员ID的照片 -->
                     <!-- <img :src="'img/'+ person.id +'.jpg'" alt=""> -->
                     <!-- 针对人员姓名+ID的照片 -->
-                    <!-- <img :src="'img/'+ person.name + person.id + '.jpg'" alt=""> -->
+                    <!-- <img style="margin-bottom: 10px; margin-top: 10px;" :src="'img/'+ person.name + person.id + '.jpg'" alt=""> -->
                     <!-- 针对人员姓名的照片 -->
-                    <img :src="'img/'+ person.name + '.jpg'" alt="">
+                    <!-- <img :src="'img/'+ person.name + '.jpg'" alt=""> -->
+                    <!-- 针对photo的照片 -->
+                    <img style="margin-bottom: 10px; margin-top: 10px;" :src="'img/'+ person.photo" alt="">
                     <p>姓名：{{ person.name }}</p>
                     <p>身份证号：</p>
                     <p>{{ person.id }}</p>
                     <p><span style="margin-right: 5px">考场： {{ person.room || '' }}</span> <span>座位: {{ person.seat || '' }}</span></p>
-                    <p class="formate"><span>进场：</span> <span class="bd-bottom">               </span></p>
+                    <p class="formate" style="margin-bottom: 10px; margin-top: 10px;"><span>进场：</span> <span class="bd-bottom">               </span></p>
                     <p class="formate"><span>离场：</span> <span class="bd-bottom">               </span></p>
                 </div>
             </div>
