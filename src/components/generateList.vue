@@ -1,9 +1,8 @@
 <template>
 <!--    生成资格复审名单-->
-<!--    number	id	name	testCode	cityCode	unitCode	codeKey 	ratio	need	call
-	qk1	qk2	grade1	grade2	totalgrade	update	updategrade codeKey-->
+<!--    number	id	name	testCode	unitCode	codeKey  job  ratio	need    updategrade -->
 <!-- 处理逻辑为当总人数少于资格复审人数时，全部进入资格复审，如果总人数大于资格复审人数，则从招录人数*比例的人数号码开始比较每下一个成绩，成绩相同则都进入资格复审，成绩不同，则终止 -->
-<!--    使用说明: 字段为以上字段,总分排序按照updategrade排序,必须要有比例和人数 codeKey为unitCod+jobCode-->
+<!--    使用说明: 字段为以上字段,总分排序按照updategrade排序,必须要有比例和人数 codeKey在没有岗位代码的情况下为unitCod+jobCode-->
     <div>
         <!-- 上传原始数据按钮 -->
         <el-upload
