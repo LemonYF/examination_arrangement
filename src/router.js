@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 //import组件模块
-import HelloWorld from './components/HelloWorld' // 忘了
+import generateTicket from './components/generateTicket' // 生成准考证号码
 import DataCompare from './components/DataCompare'
 import SeatMap from './components/SeatMap'  // 生成座位图
 import doorTicket from './components/roomDoorTicket'  // 生成考场门贴
@@ -11,7 +11,7 @@ import generateList from './components/generateList' // 生成资格复审名单
 import addData from './components/addKeyItem' // 添加特定数据列
 import dataScreen from './components/dataScreen' // 添加特定数据列
 import generateWorkerCert from './components/generateWorkerCert'//生成工考证书
-import generateAuditionList from './components/generateAuditionList'
+import generateAuditionList from './components/generateAuditionList' // 生成面试人员名单（名字集中版）
 import homePage from './components/homepage'
 
 
@@ -26,9 +26,9 @@ export default new Router({
             component: homePage,
         },
         {
-            path: '/helloWorld',   //  定义为/会默认显示这个页面
-            name: 'helloWorld',
-            component: HelloWorld,
+            path: '/generateTicket',   //  定义为/会默认显示这个页面
+            name: 'generateTicket',
+            component: generateTicket,
         },
         {
             path: '/data',
