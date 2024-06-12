@@ -71,7 +71,7 @@
   import axios from 'axios'
 
   export default {
-    name: 'HelloWorld',
+    name: 'generateTicket',
     props: {
       msg: String
     },

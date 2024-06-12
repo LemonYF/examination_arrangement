@@ -3,7 +3,7 @@
       <img alt="Vue logo" :src="picUrl">
       <h3>考务工具系统</h3>
       <p>
-        <router-link to="/HelloWorld">编排考场</router-link>
+        <router-link to="/generateTicket">编排考场</router-link>
       </p>
       <p>
         <router-link to="/seat">座次表生成</router-link>

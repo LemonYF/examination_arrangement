@@ -26,7 +26,7 @@ export default new Router({
             component: homePage,
         },
         {
-            path: '/generateTicket',   //  定义为/会默认显示这个页面
+            path: '/generateTicket',  
             name: 'generateTicket',
             component: generateTicket,
         },
