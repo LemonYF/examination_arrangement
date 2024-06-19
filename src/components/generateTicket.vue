@@ -164,34 +164,34 @@
           console.log('第' + i + '个考场')
           for (let j = 0; j < this.sortData[i].length; j++) {
             console.log(this.sortData[i][j].name, i + 1, j + 1)
-            this.$set(this.sortData[i][j], 'subjectA', this.testSubjectA)
+            // this.$set(this.sortData[i][j], 'subjectA', this.testSubjectA)
             // this.$set(this.sortData[i][j], 'subjectB', this.testSubjectB)
-            this.$set(this.sortData[i][j], 'dateA', this.testDate)
+            // this.$set(this.sortData[i][j], 'dateA', this.testDate)
             // this.$set(this.sortData[i][j], 'dateB', this.testDate)
-            this.$set(this.sortData[i][j], 'timeA', this.testTimeA)
+            // this.$set(this.sortData[i][j], 'timeA', this.testTimeA)
             // this.$set(this.sortData[i][j], 'timeB', this.testTimeB)
-            let currentRoom = this.roomNo - 70 // 计算第二考场的序号，为currentRoom
-            if (this.roomNo <= 70) {
-              this.$set(this.sortData[i][j], 'examinationRoomName', '技师学院1号楼')
-              this.$set(this.sortData[i][j], 'placeA', this.testPlaceName + '1号楼')
-              if (this.roomNo < 10) {
-                this.$set(this.sortData[i][j], 'examinationRoomA', '0' + this.roomNo.toString())
-                // this.$set(this.sortData[i][j], 'examinationRoomB', '0' + this.roomNo.toString())
-              } else {
-                this.$set(this.sortData[i][j], 'examinationRoomA', this.roomNo.toString())
-                // this.$set(this.sortData[i][j], 'examinationRoomB', this.roomNo.toString())
-              }
-            } else {
-              this.$set(this.sortData[i][j], 'examinationRoomName', '技师学院2号楼')
-              this.$set(this.sortData[i][j], 'placeA', this.testPlaceName + '2号楼')
-              if (currentRoom < 10) {
-                this.$set(this.sortData[i][j], 'examinationRoomA', '0' + currentRoom.toString())
-                // this.$set(this.sortData[i][j], 'examinationRoomB', '0' + currentRoom.toString())
-              } else {
-                this.$set(this.sortData[i][j], 'examinationRoomA', currentRoom.toString())
-                // this.$set(this.sortData[i][j], 'examinationRoomB', currentRoom.toString())
-              }
-            }
+            // let currentRoom = this.roomNo - 70 // 计算第二考场的序号，为currentRoom
+            // if (this.roomNo <= 70) {
+            //   this.$set(this.sortData[i][j], 'examinationRoomName', '技师学院1号楼')
+            //   this.$set(this.sortData[i][j], 'placeA', this.testPlaceName + '1号楼')
+            //   if (this.roomNo < 10) {
+            //     this.$set(this.sortData[i][j], 'examinationRoomA', '0' + this.roomNo.toString())
+            //     // this.$set(this.sortData[i][j], 'examinationRoomB', '0' + this.roomNo.toString())
+            //   } else {
+            //     this.$set(this.sortData[i][j], 'examinationRoomA', this.roomNo.toString())
+            //     // this.$set(this.sortData[i][j], 'examinationRoomB', this.roomNo.toString())
+            //   }
+            // } else {
+            //   this.$set(this.sortData[i][j], 'examinationRoomName', '技师学院2号楼')
+            //   this.$set(this.sortData[i][j], 'placeA', this.testPlaceName + '2号楼')
+            //   if (currentRoom < 10) {
+            //     this.$set(this.sortData[i][j], 'examinationRoomA', '0' + currentRoom.toString())
+            //     // this.$set(this.sortData[i][j], 'examinationRoomB', '0' + currentRoom.toString())
+            //   } else {
+            //     this.$set(this.sortData[i][j], 'examinationRoomA', currentRoom.toString())
+            //     // this.$set(this.sortData[i][j], 'examinationRoomB', currentRoom.toString())
+            //   }
+            // }
 
             this.$set(this.sortData[i][j], 'examinationNumberA', j + 1 < 10 ? '0' + (j + 1) : (j + 1).toString())
             // this.$set(this.sortData[i][j], 'examinationNumberB', j + 1 < 10 ? '0' + (j + 1) : (j + 1).toString())
@@ -211,126 +211,118 @@
         return jsonData.map(v => filterVal.map(j => v[j]))
       },
       createTestNumber(subject, examinationRoomName, roomNo, examinationNumberA) { // 事业单位生成准考证号
-        console.log(roomNo, examinationNumberA)
-        if (examinationRoomName === '技师学院2号楼') {
-          switch (subject) {
-            case '综合管理类（A）':
-              return '200102' + roomNo + examinationNumberA
-            case '社会科学专技类（B）':
-              return '200202' + roomNo + examinationNumberA
-            case '自然科学专技类（C）':
-              return '200302' + roomNo + examinationNumberA
-            case '中小学教师类（D）小学教师':
-              return '200402' + roomNo + examinationNumberA
-            case '中小学教师类（D）中学教师':
-              return '200502' + roomNo + examinationNumberA
-            case '医疗卫生类（E）中医临床':
-              return '200602' + roomNo + examinationNumberA
-            case '医疗卫生类（E）西医临床':
-              return '200702' + roomNo + examinationNumberA
-            case '医疗卫生类（E）药剂':
-              return '200802' + roomNo + examinationNumberA
-            case '医疗卫生类（E）护理':
-              return '200902' + roomNo + examinationNumberA
-            case '医疗卫生类（E）医学技术':
-              return '201002' + roomNo + examinationNumberA
-            case '医疗卫生类（E）公共卫生管理':
-              return '201102' + roomNo + examinationNumberA
-          }
-        } else {
-          switch (subject) {
-            // case '综合管理类（A）':
-            //   return '200101' + roomNo + examinationNumberA
-            // case '社会科学专技类（B）':
-            //   return '200201' + roomNo + examinationNumberA
-            // case '自然科学专技类（C）':
-            //   return '200301' + roomNo + examinationNumberA
-            // case '中小学教师类（D）小学教师':
-            //   return '200401' + roomNo + examinationNumberA
-            // case '中小学教师类（D）中学教师':
-            //   return '200501' + roomNo + examinationNumberA
-            // case '医疗卫生类（E）中医临床':
-            //   return '200601' + roomNo + examinationNumberA
-            // case '医疗卫生类（E）西医临床':
-            //   return '200701' + roomNo + examinationNumberA
-            // case '医疗卫生类（E）药剂':
-            //   return '200801' + roomNo + examinationNumberA
-            // case '医疗卫生类（E）护理':
-            //   return '200901' + roomNo + examinationNumberA
-            // case '医疗卫生类（E）医学技术':
-            //   return '201001' + roomNo + examinationNumberA
-            // case '医疗卫生类（E）公共卫生管理':
-            //   return '201101' + roomNo + examinationNumberA
-            case '高中语文':
-              return '20200201' + roomNo + examinationNumberA
-            case '高中地理':
-              return '20200202' + roomNo + examinationNumberA
-            case '高中数学':
-              return '20200203' + roomNo + examinationNumberA
-            case '高中政治':
-              return '20200204' + roomNo + examinationNumberA
-            case '高中英语':
-              return '20200205' + roomNo + examinationNumberA
-            case '特殊教育（培智）':
-              return '20200206' + roomNo + examinationNumberA
-            case '高中物理':
-              return '20200207' + roomNo + examinationNumberA
-            case '高中生物':
-              return '20200208' + roomNo + examinationNumberA
-            case '高中化学':
-              return '20200209' + roomNo + examinationNumberA
-            case '高中信息技术':
-              return '20200210' + roomNo + examinationNumberA
-            case '高中历史':
-              return '20200211' + roomNo + examinationNumberA
-              case '特殊教育（盲聋哑）':
-              return '20200212' + roomNo + examinationNumberA
-            case '高中音乐':
-              return '20200213' + roomNo + examinationNumberA
-            case '日语':
-              return '20200214' + roomNo + examinationNumberA
-            case '中职旅游':
-              return '20200215' + roomNo + examinationNumberA
-            case '意大利语':
-              return '20200216' + roomNo + examinationNumberA
-            case '高中心理健康':
-              return '20200217' + roomNo + examinationNumberA
-            case '高中体育':
-              return '20200218' + roomNo + examinationNumberA
-            case '书法':
-              return '20200219' + roomNo + examinationNumberA
-            case '舞蹈':
-              return '20200220' + roomNo + examinationNumberA
-          }
-        }
+        console.log(roomNo, examinationNumberA, examinationRoomName, subject)
+        // if (examinationRoomName === '技师学院2号楼') {
+        //   switch (subject) {
+        //     case '综合管理类（A）':
+        //       return '200102' + roomNo + examinationNumberA
+        //     case '社会科学专技类（B）':
+        //       return '200202' + roomNo + examinationNumberA
+        //     case '自然科学专技类（C）':
+        //       return '200302' + roomNo + examinationNumberA
+        //     case '中小学教师类（D）小学教师':
+        //       return '200402' + roomNo + examinationNumberA
+        //     case '中小学教师类（D）中学教师':
+        //       return '200502' + roomNo + examinationNumberA
+        //     case '医疗卫生类（E）中医临床':
+        //       return '200602' + roomNo + examinationNumberA
+        //     case '医疗卫生类（E）西医临床':
+        //       return '200702' + roomNo + examinationNumberA
+        //     case '医疗卫生类（E）药剂':
+        //       return '200802' + roomNo + examinationNumberA
+        //     case '医疗卫生类（E）护理':
+        //       return '200902' + roomNo + examinationNumberA
+        //     case '医疗卫生类（E）医学技术':
+        //       return '201002' + roomNo + examinationNumberA
+        //     case '医疗卫生类（E）公共卫生管理':
+        //       return '201102' + roomNo + examinationNumberA
+        //   }
+        // } else {
+        //   switch (subject) {
+        //     // case '综合管理类（A）':
+        //     //   return '200101' + roomNo + examinationNumberA
+        //     // case '社会科学专技类（B）':
+        //     //   return '200201' + roomNo + examinationNumberA
+        //     // case '自然科学专技类（C）':
+        //     //   return '200301' + roomNo + examinationNumberA
+        //     // case '中小学教师类（D）小学教师':
+        //     //   return '200401' + roomNo + examinationNumberA
+        //     // case '中小学教师类（D）中学教师':
+        //     //   return '200501' + roomNo + examinationNumberA
+        //     // case '医疗卫生类（E）中医临床':
+        //     //   return '200601' + roomNo + examinationNumberA
+        //     // case '医疗卫生类（E）西医临床':
+        //     //   return '200701' + roomNo + examinationNumberA
+        //     // case '医疗卫生类（E）药剂':
+        //     //   return '200801' + roomNo + examinationNumberA
+        //     // case '医疗卫生类（E）护理':
+        //     //   return '200901' + roomNo + examinationNumberA
+        //     // case '医疗卫生类（E）医学技术':
+        //     //   return '201001' + roomNo + examinationNumberA
+        //     // case '医疗卫生类（E）公共卫生管理':
+        //     //   return '201101' + roomNo + examinationNumberA
+        //     case '高中语文':
+        //       return '20200201' + roomNo + examinationNumberA
+        //     case '高中地理':
+        //       return '20200202' + roomNo + examinationNumberA
+        //     case '高中数学':
+        //       return '20200203' + roomNo + examinationNumberA
+        //     case '高中政治':
+        //       return '20200204' + roomNo + examinationNumberA
+        //     case '高中英语':
+        //       return '20200205' + roomNo + examinationNumberA
+        //     case '特殊教育（培智）':
+        //       return '20200206' + roomNo + examinationNumberA
+        //     case '高中物理':
+        //       return '20200207' + roomNo + examinationNumberA
+        //     case '高中生物':
+        //       return '20200208' + roomNo + examinationNumberA
+        //     case '高中化学':
+        //       return '20200209' + roomNo + examinationNumberA
+        //     case '高中信息技术':
+        //       return '20200210' + roomNo + examinationNumberA
+        //     case '高中历史':
+        //       return '20200211' + roomNo + examinationNumberA
+        //       case '特殊教育（盲聋哑）':
+        //       return '20200212' + roomNo + examinationNumberA
+        //     case '高中音乐':
+        //       return '20200213' + roomNo + examinationNumberA
+        //     case '日语':
+        //       return '20200214' + roomNo + examinationNumberA
+        //     case '中职旅游':
+        //       return '20200215' + roomNo + examinationNumberA
+        //     case '意大利语':
+        //       return '20200216' + roomNo + examinationNumberA
+        //     case '高中心理健康':
+        //       return '20200217' + roomNo + examinationNumberA
+        //     case '高中体育':
+        //       return '20200218' + roomNo + examinationNumberA
+        //     case '书法':
+        //       return '20200219' + roomNo + examinationNumberA
+        //     case '舞蹈':
+        //       return '20200220' + roomNo + examinationNumberA
+        //   }
+        // }
       },
-      createEducationNumber(subject, examinationRoomName, roomNo, examinationNumberA) { // 教育水测生成准考证号
-        console.log(roomNo, examinationNumberA)
-        switch (subject) {
-          case '幼教':
-            return '20200301' + roomNo + examinationNumberA
-          case '小学':
-            return '20200302' + roomNo + examinationNumberA
-          case '初中':
-            return '20200303' + roomNo + examinationNumberA
-          case '高中（含职业高中）':
-            return '20200304' + roomNo + examinationNumberA
-        }
-      },
+      // createEducationNumber(subject, examinationRoomName, roomNo, examinationNumberA) { // 教育水测生成准考证号
+      //   console.log(roomNo, examinationNumberA, examinationRoomName)
+      //   switch (subject) {
+      //     case '幼教':
+      //       return '20200301' + roomNo + examinationNumberA
+      //     case '小学':
+      //       return '20200302' + roomNo + examinationNumberA
+      //     case '初中':
+      //       return '20200303' + roomNo + examinationNumberA
+      //     case '高中（含职业高中）':
+      //       return '20200304' + roomNo + examinationNumberA
+      //   }
+      // },
       exportExcel() { // 导出事业单位excel
         this.transformData()
         const { export_json_to_excel } = require('@/vendor/Export2Excel')
         // 少一个准考证号，一个报考专业代码
-        const tHeader = ['报考单位', '考试科目', '报考岗位', '报考专业'
-          , '报名序号', '姓名', '身份证号', '考试科目A'
-          , '考试地点A', '考试日期A', '考试时间A', '考场号A', '座位号A'
-          , '考试科目B', '考试地点B', '考试日期B', '考试时间B', '考场号B', '座位号B',
-          '最高学历', '准考证号', '报考专业代码']
-        const filterVal = ['unit', 'subject', 'job', 'subject',
-          'number', 'name',  'id',
-          'subjectA', 'placeA', 'dateA', 'timeA',
-          'examinationRoomA', 'examinationNumberA','subjectB', 'placeB', 'dateB', 'timeB',
-          'examinationRoomB', 'examinationNumberB', 'testNumber ', 'testNumber']
+        const tHeader = ['姓名', '身份证号', '考场号', '座位号', '准考证号']
+        const filterVal = ['name',  'id', 'examinationRoomA', 'examinationNumberA', 'testNumber']
         const list = this.dataToExcel
         const data = this.formatJson(filterVal, list)
         export_json_to_excel(tHeader, data, this.dataToExcel[0].subject)

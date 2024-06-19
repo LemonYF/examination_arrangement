@@ -28,7 +28,7 @@
         <div v-for="(item, index) in sortData" :key="index">
             <h4 style="margin: 0 auto">{{ title }}   {{ item[0].room}} 考场</h4>
             <p style="display: flex; justify-content: space-between">
-                <span style="display: inline-block">考点： {{ testPlaceName }}</span>
+                <span style="display: inline-block">考点： {{ item[0].testPlaceName }}</span>
                 <span v-if="testSubjectB !== ''" style="display: inline-block">科目： {{ testSubjectA }} / {{ testSubjectB }} </span>
                 <span v-else style="display: inline-block">科目： {{ testSubjectA }} </span>
             </p>
@@ -37,19 +37,21 @@
                     <!-- 针对只有人员编号的照片 -->
                     <!-- <img :src="'img/'+ person.number + '.jpg'" alt=""> -->
                     <!-- 针对只有人员ID的照片 -->
-                    <!-- <img :src="'img/'+ person.id +'.jpg'" alt=""> -->
+                    <img :src="'img/'+ person.id +'.jpg'" alt="">
                     <!-- 针对人员姓名+ID的照片 -->
                     <!-- <img style="margin-bottom: 10px; margin-top: 10px;" :src="'img/'+ person.name + person.id + '.jpg'" alt=""> -->
                     <!-- 针对人员姓名的照片 -->
                     <!-- <img :src="'img/'+ person.name + '.jpg'" alt=""> -->
                     <!-- 针对photo的照片 -->
-                    <img style="margin-bottom: 10px; margin-top: 10px;" :src="'img/'+ person.photo" alt="">
+                    <!-- <img style="margin-bottom: 10px; margin-top: 10px;" :src="'img/'+ person.photo" alt=""> -->
                     <p>姓名：{{ person.name }}</p>
                     <p>身份证号：</p>
                     <p>{{ person.id }}</p>
+                    <p>准考证号：</p>
+                    <p>{{ person.testNumber }}</p>
                     <p><span style="margin-right: 5px">考场： {{ person.room || '' }}</span> <span>座位: {{ person.seat || '' }}</span></p>
                     <p class="formate" style="margin-bottom: 10px; margin-top: 10px;"><span>进场：</span> <span class="bd-bottom">               </span></p>
-                    <p class="formate"><span>离场：</span> <span class="bd-bottom">               </span></p>
+                    <!-- <p class="formate"><span>离场：</span> <span class="bd-bottom">               </span></p> -->
                 </div>
             </div>
         </div>
@@ -155,7 +157,7 @@
             page-break-after: always;
             align-items: flex-start;
             .item {
-                font-size: 8px;
+                font-size: 11px;
                 width: 36.3mm;
                 height: 55mm;
                 border: 1px solid gray;
