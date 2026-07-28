@@ -5,6 +5,7 @@ import Router from 'vue-router'
 import generateTicket from './components/generateTicket' // 生成准考证号码
 import DataCompare from './components/DataCompare'
 import SeatMap from './components/SeatMap'  // 生成座位图
+import SeatMapTicket from './components/SeatMapTicket'  // 生成桌贴
 import doorTicket from './components/roomDoorTicket'  // 生成考场门贴
 import upload from './components/uploadExcel'  // 数据对比
 import generateList from './components/generateList' // 生成资格复审名单
@@ -39,6 +40,11 @@ export default new Router({
             path: '/seat',
             name: 'seat',
             component: SeatMap
+        },
+        {
+            path: '/seatTicket',  //桌贴
+            name: 'seatTicket',
+            component: SeatMapTicket
         },
         {
             path: '/doorTicket',

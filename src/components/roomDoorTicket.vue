@@ -34,20 +34,23 @@
                 <p>  </p>
                 <p> 第<span :style="{'font-weight': 'bold', 'font-size': '80px'}">{{ item.room }}</span>考场</p>
                 <!-- <p style="font-weight: 700">{{item.subject}}({{ item.count }})人</p> -->
-                <p v-if="testSubjectB !== ''" style="display: inline-block;font-weight: 700; font-size: 40px">科目： {{ testSubjectA }} / {{ testSubjectB }} </p>
-                <p v-else style="display: inline-block">科目： {{ testSubjectA }} </p>
+                <p span :style="{'font-weight': 'bold', 'font-size': '60px'}">{{item.subject}}</p>
+                <!-- <p style="font-weight: 700">{{item.subject}}</p> -->
+                <!-- <p v-if="testSubjectB !== ''" style="display: inline-block;font-weight: 700; font-size: 40px">科目： {{ testSubjectA }} / {{ testSubjectB }} </p> -->
+                <!-- <p v-else style="display: inline-block">科目： {{ testSubjectA }} </p> -->
                 <!-- <p style="font-weight: 700">{{ testSubjectA }} / {{ testSubjectB }}</p> -->
-                <p style="font-weight: 700">({{ item.count }})人</p>
+                <p span :style="{'font-weight': 'bold', 'font-size': '50px'}">({{ item.count }})人</p>
                 <p></p>
                 <p></p>
                 <div class="line"></div>
-                <p></p>
-                <p></p>
+                <!-- <p></p> -->
+                <!-- <p></p> -->
                 <p></p>
                 <p> {{ item.minNumber }} - {{ item.maxNumber }}</p>
                 <p></p>
                 <p></p>
-                <p>{{ testDate }} {{ testTime }}</p>
+                <p> {{ item.testDate }} {{ item.testTime }}</p>
+                <!-- <p>{{ testDate }} {{ testTime }}</p> -->
                 <!-- <p>{{ testTime }}</p> -->
             </div>
         </div>
@@ -66,9 +69,9 @@
                 picUrl: 'logo.png',
                 doorTicket: [],
                 maxNumber: 0,
-                title: '襄阳市2023年专项引进紧缺人才笔试', // 考试名称
+                title: '2026年度第二批襄阳市工程技术部分专业技术职称水平能力测试', // 考试名称
                 testPlaceName: '襄阳职业技术学院隆中校区', // 考点名称
-                testDate: '2023年6月4日', // 考试日期
+                testDate: '2026年8月1日', // 考试日期
                 testTime: '08:30-10:00', //考试时间
                 testSubjectA: "职业能力倾向测验",
                 testSubjectB: "综合应用能力",
@@ -133,13 +136,18 @@
                         people: 0,
                         subject: ''
                     }
-                    obj.count = data[i].length
+                    // // obj.count = data[i].length
                     const length = data[i].length - 1
                     let item =  data[i]
-                    obj.minNumber = item[0].testNumber
-                    obj.maxNumber = item[length].testNumber
+                    // obj.minNumber = item[0].testNumber
+                    // obj.maxNumber = item[length].testNumber
+                    obj.minNumber = item[0].minNumber
+                    obj.maxNumber = item[0].maxNumber
                     obj.subject = item[0].subject
                     obj.room = item[0].room
+                    obj.count = item[0].count
+                    obj.testTime = item[0].testTime
+                    obj.testDate = item[0].testDate
                     obj.people = length + 1
                     arr.push(obj)
                 }

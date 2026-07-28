@@ -28,7 +28,8 @@
         <div v-for="(item, index) in sortData" :key="index">
             <h4 style="margin: 0 auto">{{ title }}   {{ item[0].room}} 考场</h4>
             <p style="display: flex; justify-content: space-between">
-                <span style="display: inline-block">考点： {{ item[0].testPlaceName }}</span>
+                <!-- <span style="display: inline-block">考点： {{ item[0].testPlaceName }}</span> -->
+                <span style="display: inline-block">考点： {{ testPlaceName }}</span>
                 <span v-if="testSubjectB !== ''" style="display: inline-block">科目： {{ testSubjectA }} / {{ testSubjectB }} </span>
                 <span v-else style="display: inline-block">科目： {{ testSubjectA }} </span>
             </p>
@@ -37,19 +38,18 @@
                     <!-- 针对只有人员编号的照片 -->
                     <!-- <img :src="'img/'+ person.number + '.jpg'" alt=""> -->
                     <!-- 针对只有人员ID的照片 -->
-                    <img :src="'img/'+ person.id +'.jpg'" alt="">
+                    <!-- <img :src="'img/'+ person.id +'.jpg'" alt="">-->
                     <!-- 针对人员姓名+ID的照片 -->
-                    <!-- <img style="margin-bottom: 10px; margin-top: 10px;" :src="'img/'+ person.name + person.id + '.jpg'" alt=""> -->
-                    <!-- 针对人员姓名的照片 -->
+                    <img style="margin-bottom: 1px; margin-top: 1px;" :src="'img/'+ person.name + person.id + '.jpg'" alt="">
                     <!-- <img :src="'img/'+ person.name + '.jpg'" alt=""> -->
                     <!-- 针对photo的照片 -->
                     <!-- <img style="margin-bottom: 10px; margin-top: 10px;" :src="'img/'+ person.photo" alt=""> -->
-                    <p>姓名：{{ person.name }}</p>
+                    <p>姓名：{{ person.name }} <span style="margin-left: 15px">座位: {{ person.seat || '' }}</span></p>
                     <p>身份证号：</p>
                     <p>{{ person.id }}</p>
                     <p>准考证号：</p>
                     <p>{{ person.testNumber }}</p>
-                    <p><span style="margin-right: 5px">考场： {{ person.room || '' }}</span> <span>座位: {{ person.seat || '' }}</span></p>
+                    <!-- <p><span style="margin-right: 5px">考场： {{ person.room || '' }}</span> <span>座位: {{ person.seat || '' }}</span></p> -->
                     <p class="formate" style="margin-bottom: 10px; margin-top: 10px;"><span>进场：</span> <span class="bd-bottom">               </span></p>
                     <!-- <p class="formate"><span>离场：</span> <span class="bd-bottom">               </span></p> -->
                 </div>
@@ -71,7 +71,7 @@
                 testPlaceName: '', // 考点名称
                 testDate: '2020年8月9日', // 考试日期
                 title: '笔试座次表', // 标题
-                testSubjectA: '综合能力知识', // 考试科目
+                testSubjectA: '综合知识', // 考试科目
                 testSubjectB: '', // 考试科目
                 testTimeA: '8:30 - 10:00',
                 testTimeB: '10:00 - 12:00',

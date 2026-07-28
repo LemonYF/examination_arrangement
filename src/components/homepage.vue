@@ -9,6 +9,9 @@
         <router-link to="/seat">座次表生成</router-link>
       </p>
       <p>
+        <router-link to="/seatTicket">考场桌贴生成</router-link>
+      </p>
+      <p>
         <router-link to="/doorTicket">考场门贴生成</router-link>
       </p>
       <p>
